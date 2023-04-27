@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Registration Successful</title>
+</head>
+<body>
+<h1>User successfully created!</h1>
+<div>
+  <label>#UserID:</label>
+  <span th:text="${userId}"></span> <br/>
+
+  <label>Email:</label>
+  <span th:text="${email}"></span><br/>
+
+  <label>Password:</label>
+  <span th:text="${password}"></span><br/>
+  <p>Password will only be shown once</p>
+</div>
+<a th:href="@{'/projectCalculator/mainPage/' + ${userId}}">Main-page</a>
+</body>
+</html>

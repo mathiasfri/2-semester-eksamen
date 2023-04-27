@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your site</title>
+</head>
+
+<body>
+<h1 th:text="'Welcome ' + ${userId} +' ' + ${email} + ' to your personal site'"></h1>
+<br>
+<a th:href="@{'/projectCalculator/login'}"><button type="button">Logout</button></a>
+<br>
+
+</body>
+</html>

@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Project Calculator</title>
+    <link th:href="@{/style.css}" href="/style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<h1>SUIIIIII</h1>
+<div>
+    <div>
+        <h1>SIUUUUUUU</h1>
+    </div>
+    <div>
+        <a th:href="@{/projectCalculator/login}">Login</a><p> or </p><a th:href="@{/projectCalculator/create}">Sign up</a>
+    </div>
+</div>
 </body>
 </html>
