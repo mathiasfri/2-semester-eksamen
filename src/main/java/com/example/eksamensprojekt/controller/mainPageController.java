@@ -35,7 +35,7 @@ public class mainPageController {
         return "userCreated";
     }
 
-    @GetMapping("/mainpage/{uid}")
+    @GetMapping("/mainPage/{uid}")
     public String mainPage(@PathVariable int uid, Model model, HttpSession session){
         User user = userRepository.getUser(uid);
 
