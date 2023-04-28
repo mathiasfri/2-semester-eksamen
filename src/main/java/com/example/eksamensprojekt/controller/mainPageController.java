@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("projectCalculator")
+@RequestMapping("")
 @Controller
 public class mainPageController {
     private UserRepository userRepository;

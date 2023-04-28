@@ -7,7 +7,7 @@
 <body>
 <h1>Create user account!</h1>
 <div>
-  <form th:action="@{/projectCalculator/adduser}" th:object="${newUser}" method="post">
+  <form th:action="@{https://damp-eyrie-59618.herokuapp.com/adduser}" th:object="${newUser}" method="post">
     <label>
       <input type="email" th:field="*{email}" placeholder="type email">
     </label>
