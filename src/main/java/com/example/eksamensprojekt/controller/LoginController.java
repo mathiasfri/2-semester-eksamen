@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@RequestMapping("/projectCalculator")
+@RequestMapping("")
 @Controller
 public class LoginController {
     private LoginRepository loginRepository;
