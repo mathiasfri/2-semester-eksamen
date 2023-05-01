@@ -6,10 +6,30 @@
 </head>
 
 <body>
+<main>
 <h1 th:text="'Welcome ' + ${userId} +' ' + ${email} + ' to your personal site'"></h1>
 <br>
 <a th:href="@{'/projectCalculator/login'}"><button type="button">Logout</button></a>
 <br>
 
+    <br>
+    <a th:href="@{'/projectCalculator/createproject/' + ${userId}}">Add project</a>
+    <br>
+
+    <table>
+        <tr th:if="${projectList.isEmpty()}">
+            <td colspan="3">No projects made... Create a project!</td>
+        </tr>
+        <tr th:unless="${projectList.isEmpty()}" th:each="pl : ${projectList}">
+            <td th:text="${pl.getTitle()}"></td>
+            <td th:text="${pl.getDeadline()}"></td>
+            <td th:text="${pl.getBudget()}"></td>
+            <td>
+                <a th:href="@{'/projectCalculator/updateproject/'+ ${pl.getId()}}">Update wish</a>
+                <a th:href="@{'/projectCalculator/deleteproject/'+ ${pl.getUserId()} + '/' + ${pl.getId()} }">Delete wish</a>
+            </td>
+        </tr>
+    </table>
+</main>
 </body>
 </html>
