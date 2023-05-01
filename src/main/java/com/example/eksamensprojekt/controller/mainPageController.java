@@ -1,6 +1,8 @@
 package com.example.eksamensprojekt.controller;
 
+import com.example.eksamensprojekt.models.Project;
 import com.example.eksamensprojekt.models.User;
+import com.example.eksamensprojekt.repository.ProjectRepository;
 import com.example.eksamensprojekt.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -14,10 +16,12 @@ import java.util.List;
 public class mainPageController {
     private UserRepository userRepository;
     private LoginController loginController;
+    private ProjectRepository projectRepository;
 
-    public mainPageController(UserRepository userRepository, LoginController loginController) {
+    public mainPageController(UserRepository userRepository, LoginController loginController, ProjectRepository projectRepository) {
         this.userRepository = userRepository;
         this.loginController = loginController;
+        this.projectRepository = projectRepository;
     }
     @GetMapping("/create")
     public String createUser(Model model){
@@ -42,6 +46,8 @@ public class mainPageController {
         model.addAttribute("userId", user.getUserId());
         model.addAttribute("email", user.getEmail());
 
+        List<Project> projectList = projectRepository.getProjectList((uid));
+        model.addAttribute("projectList", projectList);
         return loginController.isLoggedIn(session, uid) ? "mainPage" : "login";
     }
 }

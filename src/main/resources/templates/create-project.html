@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Project</title>
+  <link rel="stylesheet" th:href="@{/create.css}">
+</head>
+<body>
+<h1>Create Project</h1>
+<div>
+  <form th:action="@{/projectCalculator/addproject}" th:object="${newProject}" method="post">
+    <label>
+      <input type="text" th:field="*{title}" placeholder="type title"><br/><br/>
+    </label>
+
+    <label>
+      <input type="date" th:field="*{deadline}" placeholder="type date"><br/><br/>
+    </label>
+
+    <label>
+      <input type="number" th:field="*{budget}" placeholder="insert budget"><br/><br/>
+    </label>
+
+    <input type="hidden" th:field="*{userId}">
+
+    <button type="submit">Submit</button>
+    <button type="reset">Reset</button>
+  </form>
+</div>
+</body>
+</html>

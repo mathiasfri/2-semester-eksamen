@@ -6,11 +6,13 @@ public class Tasks {
    private int hoursToComplete;
     private String titel;
     private LocalDate deadline;
+    private int id;
 
-    public Tasks(String titel, int hoursToComplete, LocalDate deadline) {
+    public Tasks(int id, String titel, int hoursToComplete, LocalDate deadline) {
         this.titel = titel;
         this.hoursToComplete = hoursToComplete;
         this.deadline = deadline;
+        this.id = id;
     }
 
     public int getHoursToComplete() {
@@ -35,5 +37,13 @@ public class Tasks {
 
     public void setDeadline(LocalDate deadline) {
         this.deadline = deadline;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

@@ -39,6 +39,7 @@ public class LoginController {
     @PostMapping("/login")
     public String login(@RequestParam("uid") String uid, @RequestParam("pw") String pw, HttpSession session, Model model) {
         User user = loginRepository.checkEmail(uid);
+        //TODO: Fejlhåndtering af en mail der ikke eksistere. Dette giver fejl 500
         if (user != null && user.getPassword().equals(pw)) {
             // create session for user and set session timeout to 30 sec (container default: 15 min)
             session.setAttribute("user", user);
