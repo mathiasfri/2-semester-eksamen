@@ -17,16 +17,17 @@ public class SubProjectController {
         this.subProjectRepository = subProjectRepository;
     }
     @GetMapping("/createsubproject/{uid}")
-    public String createWish(@PathVariable int uid, Model model){
+    public String createSubProject(@PathVariable int uid, Model model){
         SubProject newSubProject = new SubProject();
-        newSubProject.setId(uid);
+        newSubProject.setProjectId(uid);
         model.addAttribute("newSubProject", newSubProject);
         return "create-subproject";
     }
     @PostMapping("/addsubproject")
-    public String addWish(@ModelAttribute SubProject newSubProject){
+    public String addSubProject(@ModelAttribute SubProject newSubProject){
         subProjectRepository.createProject(newSubProject);
         return "redirect:/projectCalculator/mainPage/" + newSubProject.getId();
     }
 }
+
 
