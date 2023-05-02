@@ -21,8 +21,29 @@ CREATE TABLE project
     project_id    INTEGER NOT NULL AUTO_INCREMENT,
     project_titel VARCHAR(50),
     project_deadline DATE,
-    project_budget INTEGER,
+    project_budget DOUBLE,
     user_id        INTEGER,
     PRIMARY KEY (project_id),
     FOREIGN KEY (user_id) REFERENCES users (user_id)
+);
+
+CREATE TABLE subProject
+(
+    sub_id          INTEGER NOT NULL AUTO_INCREMENT,
+    sub_title       VARCHAR(30),
+    sub_deadline    DATE,
+    project_id      INTEGER,
+    PRIMARY KEY (sub_id),
+    FOREIGN KEY (project_id) REFERENCES project (project_id)
+);
+
+CREATE TABLE tasks
+(
+    task_id         INTEGER NOT NULL AUTO_INCREMENT,
+    time_spent      DOUBLE,
+    task_deadline   DATE,
+    task_title      VARCHAR(30),
+    sub_id          INTEGER,
+    PRIMARY KEY (task_id),
+    FOREIGN KEY (sub_id) REFERENCES subProject (sub_id)
 );
