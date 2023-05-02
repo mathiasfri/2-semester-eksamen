@@ -40,9 +40,9 @@ CREATE TABLE subProject
 CREATE TABLE tasks
 (
     task_id         INTEGER NOT NULL AUTO_INCREMENT,
-    time_spent      DOUBLE,
-    task_deadline   DATE,
     task_title      VARCHAR(30),
+    task_deadline   DATE,
+    time_spent      DOUBLE,
     sub_id          INTEGER,
     PRIMARY KEY (task_id),
     FOREIGN KEY (sub_id) REFERENCES subProject (sub_id)
