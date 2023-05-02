@@ -1,7 +1,9 @@
 package com.example.eksamensprojekt.controller;
 
 import com.example.eksamensprojekt.models.Project;
+import com.example.eksamensprojekt.models.SubProject;
 import com.example.eksamensprojekt.repository.ProjectRepository;
+import com.example.eksamensprojekt.repository.SubProjectRepository;
 import com.example.eksamensprojekt.repository.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,5 +29,4 @@ public class ProjectController {
         projectRepository.createProject(newProject);
         return "redirect:/projectCalculator/mainPage/" + newProject.getUserId();
     }
-
 }
