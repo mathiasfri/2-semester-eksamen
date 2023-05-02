@@ -9,6 +9,9 @@ public class Tasks {
     private int id;
     private int subId;
 
+    public Tasks() {
+
+    }
     public Tasks(int id, String title, LocalDate deadline, double timeSpent, int subId) {
         this.title = title;
         this.timeSpent = timeSpent;

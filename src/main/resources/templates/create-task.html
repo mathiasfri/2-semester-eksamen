@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Create a SubProject</title>
+  <title>Create a task</title>
   <link rel="stylesheet" th:href="@{/create.css}">
 </head>
 <body>
-<h1>Create a SubProject</h1>
+<h1>Create a task</h1>
 <div>
-  <form th:action="@{/projectCalculator/addsubproject}" th:object="${newSubProject}" method="post">
+  <form th:action="@{/projectCalculator/addtask}" th:object="${newTask}" method="post">
     <label>
       <input type="text" th:field="*{title}" placeholder="type title"><br/><br/>
     </label>
@@ -17,9 +17,11 @@
       <input type="date" th:field="*{deadline}" placeholder="type date"><br/><br/>
     </label>
 
+    <label>
+      <input type="number" th:field="*{timeSpent}" placeholder="type title"><br/><br/>
+    </label>
 
-
-    <input type="hidden" th:field="*{projectId}">
+    <input type="hidden" th:field="*{subId}">
 
     <button type="submit">Submit</button>
     <button type="reset">Reset</button>
