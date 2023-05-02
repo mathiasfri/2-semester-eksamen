@@ -8,6 +8,9 @@ public class SubProject {
     private int id;
     private int projectId;
 
+    public SubProject() {
+
+    }
     public SubProject(int id, String title, LocalDate deadline, int projectId) {
         this.title = title;
         this.deadline = deadline;
