@@ -3,32 +3,42 @@ package com.example.eksamensprojekt.models;
 import java.time.LocalDate;
 
 public class Tasks {
-   private int hoursToComplete;
-    private String titel;
+   private double timeSpent;
+    private String title;
     private LocalDate deadline;
     private int id;
+    private int subId;
 
-    public Tasks(int id, String titel, int hoursToComplete, LocalDate deadline) {
-        this.titel = titel;
-        this.hoursToComplete = hoursToComplete;
+    public Tasks(int id, String title, LocalDate deadline, double timeSpent, int subId) {
+        this.title = title;
+        this.timeSpent = timeSpent;
         this.deadline = deadline;
         this.id = id;
+        this.subId = subId;
     }
 
-    public int getHoursToComplete() {
-        return hoursToComplete;
+    public int getSubId() {
+        return subId;
     }
 
-    public void setHoursToComplete(int hoursToComplete) {
-        this.hoursToComplete = hoursToComplete;
+    public void setSubId(int subId) {
+        this.subId = subId;
     }
 
-    public String getTitel() {
-        return titel;
+    public double getTimeSpent() {
+        return timeSpent;
     }
 
-    public void setTitel(String titel) {
-        this.titel = titel;
+    public void setTimeSpent(double timeSpent) {
+        this.timeSpent = timeSpent;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public LocalDate getDeadline() {
