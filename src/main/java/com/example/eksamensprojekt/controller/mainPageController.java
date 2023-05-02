@@ -2,9 +2,11 @@ package com.example.eksamensprojekt.controller;
 
 import com.example.eksamensprojekt.models.Project;
 import com.example.eksamensprojekt.models.SubProject;
+import com.example.eksamensprojekt.models.Tasks;
 import com.example.eksamensprojekt.models.User;
 import com.example.eksamensprojekt.repository.ProjectRepository;
 import com.example.eksamensprojekt.repository.SubProjectRepository;
+import com.example.eksamensprojekt.repository.TasksRepository;
 import com.example.eksamensprojekt.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -20,13 +22,15 @@ public class mainPageController {
     private LoginController loginController;
     private ProjectRepository projectRepository;
     private SubProjectRepository subProjectRepository;
+    private TasksRepository tasksRepository;
 
     public mainPageController(UserRepository userRepository, LoginController loginController, ProjectRepository projectRepository,
-                              SubProjectRepository subProjectRepository) {
+                              SubProjectRepository subProjectRepository, TasksRepository tasksRepository) {
         this.userRepository = userRepository;
         this.loginController = loginController;
         this.projectRepository = projectRepository;
         this.subProjectRepository = subProjectRepository;
+        this.tasksRepository = tasksRepository;
     }
     @GetMapping("/create")
     public String createUser(Model model){
@@ -56,6 +60,9 @@ public class mainPageController {
 
         List<SubProject> subProjectList = subProjectRepository.getSubProjects(uid);
         model.addAttribute("subProjectList", subProjectList);
+
+        List<Tasks> tasksList = tasksRepository.getTaskList(uid);
+        model.addAttribute("tasksList", tasksList);
         return loginController.isLoggedIn(session, uid) ? "mainPage" : "login";
     }
 }

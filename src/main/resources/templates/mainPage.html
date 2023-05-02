@@ -18,6 +18,9 @@
     <br>
     <a th:href="@{'/projectCalculator/createsubproject/' + ${userId}}">Add sub-project</a>
     <br>
+    <br>
+    <a th:href="@{'/projectCalculator/createtask/' + ${userId}}">Add task</a>
+    <br>
 
     <table>
         <tr th:if="${projectList.isEmpty()}">
@@ -43,6 +46,22 @@
             <td>
                 <a th:href="@{'/projectCalculator/updateproject/'+ ${sl.getId()}}">Update project</a>
                 <a th:href="@{'/projectCalculator/deletesubproject/'+ ${sl.getProjectId()} + '/' + ${sl.getId()} }">Delete sub-project</a>
+
+
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr th:if="${tasksList.isEmpty()}">
+            <td colspan="3">No tasks made... Create a task!</td>
+        </tr>
+        <tr th:unless="${tasksList.isEmpty()}" th:each="tl : ${tasksList}">
+            <td th:text="${tl.getTitle()}"></td>
+            <td th:text="${tl.getDeadline()}"></td>
+            <td th:text="${tl.getTimeSpent()}"></td>
+            <td>
+                <a th:href="@{'/projectCalculator/updatetask/'+ ${tl.getId()}}">Update project</a>
+                <a th:href="@{'/projectCalculator/deletesubproject/'+ ${tl.getSubId()} + '/' + ${tl.getId()} }">Delete sub-project</a>
 
 
             </td>
