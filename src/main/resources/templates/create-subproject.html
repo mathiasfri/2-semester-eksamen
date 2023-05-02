@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create SubProject</title>
+  <link rel="stylesheet" th:href="@{/create.css}">
+</head>
+<body>
+<h1>Create SubProject</h1>
+<div>
+  <form th:action="@{/projectCalculator/addsubproject}" th:object="${newSubProject}" method="post">
+    <label>
+      <input type="text" th:field="*{title}" placeholder="type title"><br/><br/>
+    </label>
+
+    <label>
+      <input type="date" th:field="*{deadline}" placeholder="type date"><br/><br/>
+    </label>
+
+
+
+    <input type="hidden" th:field="*{projectId}">
+
+    <button type="submit">Submit</button>
+    <button type="reset">Reset</button>
+  </form>
+</div>
+</body>
+</html>

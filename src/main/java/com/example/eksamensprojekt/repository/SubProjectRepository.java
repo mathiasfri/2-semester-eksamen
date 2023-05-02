@@ -22,7 +22,7 @@ public class SubProjectRepository {
 
     public void createProject(SubProject subProject) {
         try(Connection con = DriverManager.getConnection(url,user_id,user_pwd)) {
-            String SQL = "INSERT INTO subProjects(sub_title, sub_deadline, project_id) VALUES(?, ?, ?)";
+            String SQL = "INSERT INTO subProject(sub_title, sub_deadline, project_id) VALUES(?, ?, ?)";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setString(1, subProject.getTitle());
             LocalDate deadline = subProject.getDeadline();
@@ -39,7 +39,7 @@ public class SubProjectRepository {
     public List<SubProject> getSubProjects(int projectId){
         List<SubProject> subProjects = new ArrayList<>();
         try(Connection con = DriverManager.getConnection(url,user_id,user_pwd)) {
-            String SQL = "SELECT * FROM subProjects WHERE project_id = ?";
+            String SQL = "SELECT * FROM subProject WHERE project_id = ?";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setInt(1, projectId);
             ResultSet rs = pstmt.executeQuery();
