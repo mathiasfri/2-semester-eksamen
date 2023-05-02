@@ -16,15 +16,16 @@ public class ProjectController {
         this.projectRepository = projectRepository;
     }
     @GetMapping("/createproject/{uid}")
-    public String createWish(@PathVariable int uid, Model model){
+    public String createProject(@PathVariable int uid, Model model){
         Project newProject = new Project();
         newProject.setUserId(uid);
         model.addAttribute("newProject", newProject);
         return "create-project";
     }
     @PostMapping("/addproject")
-    public String addWish(@ModelAttribute Project newProject){
+    public String addProject(@ModelAttribute Project newProject){
         projectRepository.createProject(newProject);
         return "redirect:/projectCalculator/mainPage/" + newProject.getUserId();
     }
+
 }
