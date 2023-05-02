@@ -26,7 +26,7 @@ public class SubProjectController {
     @PostMapping("/addsubproject")
     public String addSubProject(@ModelAttribute SubProject newSubProject){
         subProjectRepository.createProject(newSubProject);
-        return "redirect:/projectCalculator/mainPage/" + newSubProject.getId();
+        return "redirect:/projectCalculator/mainPage/" + newSubProject.getProjectId();
     }
 }
 
