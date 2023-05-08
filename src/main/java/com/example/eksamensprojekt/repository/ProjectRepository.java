@@ -54,13 +54,42 @@ public void createProject(Project project) {
                 LocalDate deadline = sqlDeadLine.toLocalDate();
                 int budget = rs.getInt("project_budget");
                 int id = rs.getInt("user_id");
+                String description = rs.getString("project_description");
 
-                projectList.add(new Project(projectId,title, deadline, budget, id));
+                projectList.add(new Project(projectId,title, deadline, budget, id, description));
             }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return projectList;
+    }
+
+    public Project getSpecificProject(int projectID){
+    Project project = null;
+
+        try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)){
+            String SQL = "SELECT * FROM project WHERE project_id = ?";
+            PreparedStatement pstm = con.prepareStatement(SQL);
+            pstm.setInt(1, projectID);
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()){
+                String title = rs.getString("project_title");
+                java.sql.Date sqlDeadLine = rs.getDate("project_deadline");
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                String formattedDate = formatter.format(sqlDeadLine);
+                LocalDate deadline = sqlDeadLine.toLocalDate();
+                int budget = rs.getInt("project_budget");
+                int id = rs.getInt("user_id");
+                String description = rs.getString("project_description");
+
+                project = new Project(projectID, title, deadline, budget, id, description);
+            }
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return project;
     }
 }

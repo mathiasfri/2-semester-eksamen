@@ -31,6 +31,7 @@
             <td th:text="${pl.getDeadline()}"></td>
             <td th:text="${pl.getBudget()}"></td>
             <td>
+                <a th:href="@{'/projectCalculator/project/' + ${pl.getId()}}">View</a>
                 <a th:href="@{'/projectCalculator/updateproject/'+ ${pl.getId()}}">Update project</a>
                 <a th:href="@{'/projectCalculator/deleteproject/'+ ${pl.getUserId()} + '/' + ${pl.getId()} }">Delete project</a>
             </td>

@@ -22,6 +22,7 @@ CREATE TABLE project
 (
     project_id    INTEGER NOT NULL AUTO_INCREMENT,
     project_title VARCHAR(50),
+    project_description VARCHAR(999),
     project_deadline DATE,
     project_budget DOUBLE,
     user_id        INTEGER,
