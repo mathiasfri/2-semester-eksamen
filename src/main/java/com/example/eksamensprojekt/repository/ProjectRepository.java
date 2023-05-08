@@ -22,14 +22,15 @@ public class ProjectRepository {
 
 public void createProject(Project project) {
     try(Connection con = DriverManager.getConnection(url,user_id,user_pwd)) {
-        String SQL = "INSERT INTO Project(project_title, project_deadline, project_budget, user_id) VALUES(?, ?, ?, ?)";
+        String SQL = "INSERT INTO Project(project_title, project_deadline, project_budget, project_description, user_id) VALUES(?, ?, ?, ?,?)";
         PreparedStatement pstmt = con.prepareStatement(SQL);
         pstmt.setString(1, project.getTitle());
         LocalDate deadline = project.getDeadline();
         java.sql.Date sqlDeadLine = java.sql.Date.valueOf(deadline);
         pstmt.setDate(2, sqlDeadLine);
         pstmt.setInt(3, project.getBudget());
-        pstmt.setInt(4, project.getUserId());
+        pstmt.setString(4, project.getDescription());
+        pstmt.setInt(5, project.getUserId());
 
         pstmt.executeUpdate();
 
@@ -91,5 +92,22 @@ public void createProject(Project project) {
             throw new RuntimeException(e);
         }
         return project;
+    }
+    public void updateProject(Project project){
+        try(Connection con = DriverManager.getConnection(url,user_id,user_pwd)) {
+            String SQL = "UPDATE Project SET project_title=?, project_deadline=?, project_budget=?, project_description =? WHERE project_id = ?;";
+            PreparedStatement pstmt = con.prepareStatement(SQL);
+            pstmt.setString(1,project.getTitle());
+            LocalDate deadline = project.getDeadline();
+            java.sql.Date sqlDeadline = java.sql.Date.valueOf(deadline);
+            pstmt.setDate(2, sqlDeadline);
+            pstmt.setInt(3, project.getBudget());
+            pstmt.setString(4, project.getDescription());
+            pstmt.setInt(5, project.getId());
+            pstmt.executeUpdate();
+
+        } catch (SQLException e){
+            throw new RuntimeException(e);
+        }
     }
 }

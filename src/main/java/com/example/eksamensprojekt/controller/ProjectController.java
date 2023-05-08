@@ -49,4 +49,16 @@ public class ProjectController {
 
         return "viewProject";
     }
+    @GetMapping("/updateproject/{pid}")
+    public String updateProject(@PathVariable int pid, Model model){
+        Project updateProject = projectRepository.getSpecificProject(pid);
+        model.addAttribute("updateProject", updateProject);
+        return"update-project";
+    }
+
+    @PostMapping("/updateproject")
+    public String updateUserProject(@ModelAttribute Project projectUpdate){
+        projectRepository.updateProject(projectUpdate);
+        return "redirect:/projectCalculator/mainPage/" + projectUpdate.getUserId();
+    }
 }
