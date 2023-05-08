@@ -1,10 +1,13 @@
 package com.example.eksamensprojekt.repository;
 
+import com.example.eksamensprojekt.models.Project;
 import com.example.eksamensprojekt.models.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class UserRepository {

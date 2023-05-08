@@ -34,6 +34,10 @@
                 <a th:href="@{'/projectCalculator/project/' + ${pl.getId()}}">View</a>
                 <a th:href="@{'/projectCalculator/updateproject/'+ ${pl.getId()}}">Update project</a>
                 <a th:href="@{'/projectCalculator/deleteproject/'+ ${pl.getUserId()} + '/' + ${pl.getId()} }">Delete project</a>
+                <a th:href="@{'/projectCalculator/assignedprojects/' + ${userId}}">
+                    <button type="button">Assigned Projects</button>
+                </a>
+
             </td>
         </tr>
     </table>

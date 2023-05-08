@@ -3,6 +3,7 @@ package com.example.eksamensprojekt.controller;
 import com.example.eksamensprojekt.models.Project;
 import com.example.eksamensprojekt.models.SubProject;
 import com.example.eksamensprojekt.repository.ProjectRepository;
+import com.example.eksamensprojekt.repository.ProjectUserRepository;
 import com.example.eksamensprojekt.repository.SubProjectRepository;
 import com.example.eksamensprojekt.repository.UserRepository;
 import org.springframework.stereotype.Controller;
@@ -17,10 +18,13 @@ import java.util.List;
 public class ProjectController {
     private ProjectRepository projectRepository;
     private SubProjectRepository subProjectRepository;
+    private ProjectUserRepository projectUserRepository;
 
-    public ProjectController(ProjectRepository projectRepository, SubProjectRepository subProjectRepository) {
+    public ProjectController(ProjectRepository projectRepository, SubProjectRepository subProjectRepository,
+    ProjectUserRepository projectUserRepository) {
         this.projectRepository = projectRepository;
         this.subProjectRepository = subProjectRepository;
+        this.projectUserRepository = projectUserRepository;
     }
     @GetMapping("/createproject/{uid}")
     public String createProject(@PathVariable int uid, Model model){
@@ -48,6 +52,17 @@ public class ProjectController {
         model.addAttribute("subProjects", subProjects);
 
         return "viewProject";
+    }
+    @PostMapping("/assignuser/{projectId}")
+    public String assignUserToProject(@PathVariable int projectId, @RequestParam("email") String userEmail) {
+        List<Integer> listOfUserIds = new ArrayList<>();
+        int userId = projectUserRepository.getUserIdByEmail(userEmail);
+        if(userId != -1) {
+            listOfUserIds.add(userId);
+            projectUserRepository.assignUsersToProject(projectId, listOfUserIds);
+        }
+
+        return "redirect:/projectCalculator/mainPage/" + projectId;
     }
     @GetMapping("/updateproject/{pid}")
     public String updateProject(@PathVariable int pid, Model model){

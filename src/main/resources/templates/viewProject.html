@@ -21,6 +21,12 @@
             </td>
         </tr>
     </table>
+
+    <form th:action="@{'/projectCalculator/assignuser/' + ${projectID}}" method="post">
+        <label for="email">Assign User:</label>
+        <input type="text" id="email" name="email" required>
+        <button type="submit">Assign User</button>
+    </form>
     <a th:href="@{'/projectCalculator/createsubproject/' + ${pid}}">Add sub-project</a>
     <br>
     <br>
