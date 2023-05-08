@@ -28,4 +28,16 @@ public class TaskController {
         tasksRepository.createTask(newTask);
         return "redirect:/projectCalculator/mainPage/" + newTask.getSubId();
     }
+    @GetMapping("/updatetask/{tid}")
+    public String updateTask(@PathVariable int tid, Model model){
+        Tasks updateTask = tasksRepository.getSpecificTask(tid);
+        model.addAttribute("updateTask", updateTask);
+        return"update-Task";
+    }
+
+    @PostMapping("/updatetask")
+    public String updateUserTask(@ModelAttribute Tasks taskUpdate){
+        tasksRepository.updateTask(taskUpdate);
+        return "redirect:/projectCalculator/mainPage/" + taskUpdate.getId();
+    }
 }

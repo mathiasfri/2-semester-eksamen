@@ -1,6 +1,7 @@
 package com.example.eksamensprojekt.repository;
 
 import com.example.eksamensprojekt.models.Project;
+import com.example.eksamensprojekt.models.SubProject;
 import com.example.eksamensprojekt.models.Tasks;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -62,5 +63,47 @@ public class TasksRepository {
             throw new RuntimeException(e);
         }
         return taskList;
+    }
+    public Tasks getSpecificTask(int taskId){
+        Tasks task = null;
+
+        try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)){
+            String SQL = "SELECT * FROM tasks WHERE task_id = ?";
+            PreparedStatement pstm = con.prepareStatement(SQL);
+            pstm.setInt(1, taskId);
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()){
+                String title = rs.getString("task_title");
+                java.sql.Date sqlDeadLine = rs.getDate("task_deadline");
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                String formattedDate = formatter.format(sqlDeadLine);
+                LocalDate deadline = sqlDeadLine.toLocalDate();
+                int timeSpent = rs.getInt("time_spent");
+                int subId = rs.getInt("sub_id");
+
+                task = new Tasks(taskId, title, deadline, timeSpent, subId);
+            }
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return task;
+    }
+    public void updateTask(Tasks task){
+        try(Connection con = DriverManager.getConnection(url,user_id,user_pwd)) {
+            String SQL = "UPDATE tasks SET task_title=?, task_deadline=?, time_spent=? WHERE task_id = ?;";
+            PreparedStatement pstmt = con.prepareStatement(SQL);
+            pstmt.setString(1,task.getTitle());
+            LocalDate deadline = task.getDeadline();
+            java.sql.Date sqlDeadline = java.sql.Date.valueOf(deadline);
+            pstmt.setDate(2, sqlDeadline);
+            pstmt.setDouble(3, task.getTimeSpent());
+            pstmt.setInt(4, task.getId());
+            pstmt.executeUpdate();
+
+        } catch (SQLException e){
+            throw new RuntimeException(e);
+        }
     }
 }

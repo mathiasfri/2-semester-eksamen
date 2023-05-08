@@ -61,7 +61,7 @@
             <td th:text="${tl.getDeadline()}"></td>
             <td th:text="${tl.getTimeSpent()}"></td>
             <td>
-                <a th:href="@{'/projectCalculator/updatetask/'+ ${tl.getId()}}">Update project</a>
+                <a th:href="@{'/projectCalculator/updatetask/'+ ${tl.getId()}}">Update task</a>
                 <a th:href="@{'/projectCalculator/deletesubproject/'+ ${tl.getSubId()} + '/' + ${tl.getId()} }">Delete sub-project</a>
 
 
