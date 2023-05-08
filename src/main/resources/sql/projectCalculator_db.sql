@@ -36,6 +36,7 @@ CREATE TABLE subProject
     sub_title       VARCHAR(30),
     sub_deadline    DATE,
     project_id      INTEGER,
+    user_id    INTEGER,
     PRIMARY KEY (sub_id),
     FOREIGN KEY (project_id) REFERENCES project (project_id)
 );

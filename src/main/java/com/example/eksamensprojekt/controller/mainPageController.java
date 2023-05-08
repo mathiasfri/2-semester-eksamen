@@ -51,7 +51,6 @@ public class mainPageController {
     @GetMapping("/mainPage/{uid}")
     public String mainPage(@PathVariable int uid, Model model, HttpSession session){
         User user = userRepository.getUser(uid);
-
         model.addAttribute("userId", user.getUserId());
         model.addAttribute("email", user.getEmail());
 
