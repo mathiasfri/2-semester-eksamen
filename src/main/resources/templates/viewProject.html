@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your project</title>
+</head>
+<body>
+<main>
+    <h1 th:text="'Viewing project - ' + ${projectTitle}"></h1>
+
+
+    <table>
+        <tr th:if="${subProjects.isEmpty()}">
+            <td colspan="3">No sub-projects made... Create a sub-project!</td>
+        </tr>
+        <tr th:unless="${subProjects.isEmpty()}" th:each="sl : ${subProjects}">
+            <td th:text="${sl.getTitle()}"></td>
+            <td th:text="${sl.getDeadline()}"></td>
+            <td>
+                <a th:href="@{'/projectCalculator/deletesubproject/'+ ${sl.getProjectId()} + '/' + ${sl.getId()} }">Delete sub-project</a>
+            </td>
+        </tr>
+    </table>
+    <a th:href="@{'/projectCalculator/createsubproject/' + ${pid}}">Add sub-project</a>
+    <br>
+    <br>
+    <button onclick="history.back()">Go back</button>
+</main>
+</body>
+</html>

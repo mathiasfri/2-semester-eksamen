@@ -8,16 +8,18 @@ public class Project {
     private String title;
     private int id;
     private int userId;
+    private String description;
 
     public Project() {
 
     }
-    public Project(int id, String title, LocalDate deadline, int budget, int userId) {
+    public Project(int id, String title, LocalDate deadline, int budget, int userId, String description) {
         this.title = title;
         this.deadline = deadline;
         this.budget = budget;
         this.id = id;
         this.userId = userId;
+        this.description = description;
     }
 
     public LocalDate getDeadline() {
@@ -58,5 +60,13 @@ public class Project {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
