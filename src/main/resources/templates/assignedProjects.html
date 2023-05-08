@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Assigned Projects</title>
+</head>
+<body>
+<main>
+  <h1>Assigned Projects</h1>
+
+  <table>
+    <tr th:if="${assignedProjects.isEmpty()}">
+      <td colspan="4">No assigned projects found.</td>
+    </tr>
+    <tr th:each="project : ${assignedProjects}">
+      <td th:text="${project.title}"></td>
+      <td th:text="${project.description}"></td>
+      <td th:text="${project.deadline}"></td>
+      <td>
+        <a th:href="@{'/projectCalculator/viewproject/' + ${project.getUserId}}">View Project</a>
+      </td>
+    </tr>
+  </table>
+
+  <br>
+  <br>
+  <button onclick="history.back()">Go Back</button>
+</main>
+</body>
+</html>

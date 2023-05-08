@@ -51,3 +51,11 @@ CREATE TABLE tasks
     PRIMARY KEY (task_id),
     FOREIGN KEY (sub_id) REFERENCES subProject (sub_id)
 );
+CREATE TABLE project_user
+(
+    project_id INTEGER,
+    user_id    INTEGER,
+    PRIMARY KEY (project_id, user_id),
+    FOREIGN KEY (project_id) REFERENCES project (project_id),
+    FOREIGN KEY (user_id) REFERENCES users (user_id)
+);

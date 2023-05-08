@@ -64,4 +64,11 @@ public class mainPageController {
         model.addAttribute("tasksList", tasksList);
         return loginController.isLoggedIn(session, uid) ? "mainPage" : "login";
     }
+    @GetMapping("/assignedprojects/{uid}")
+    public String getAssignedProjects(@PathVariable int uid, Model model) {
+        List<Project> assignedProjects = projectRepository.getAssignedProjects(uid);
+        model.addAttribute("assignedProjects", assignedProjects);
+        return "assignedProjects";
+    }
+
 }

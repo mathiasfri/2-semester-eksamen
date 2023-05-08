@@ -110,4 +110,26 @@ public void createProject(Project project) {
             throw new RuntimeException(e);
         }
     }
+    public List<Project> getAssignedProjects(int userId) {
+        List<Project> assignedProjects = new ArrayList<>();
+        try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)) {
+            String SQL = "SELECT * FROM project JOIN project_user ON project_user.project_id = project.project_id WHERE project_user.user_id = ?";
+            PreparedStatement pstmt = con.prepareStatement(SQL);
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Project project = new Project();
+                project.setId(rs.getInt("project_id"));
+                project.setTitle(rs.getString("project_title"));
+                project.setDeadline(rs.getDate("project_deadline").toLocalDate());
+                // Set other project attributes as needed
+
+                assignedProjects.add(project);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return assignedProjects;
+    }
 }
