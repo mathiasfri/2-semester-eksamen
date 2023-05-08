@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS tasks;
 DROP TABLE IF EXISTS subProject;
 DROP TABLE IF EXISTS project;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS project_user;
 -- Create new tables
 CREATE TABLE users
 (
