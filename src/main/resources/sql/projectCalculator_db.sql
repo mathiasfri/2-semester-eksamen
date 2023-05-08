@@ -5,10 +5,10 @@ CREATE DATABASE IF NOT EXISTS projectCalculator_db;
 USE projectCalculator_db;
 
 -- Drop tables if they exist
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS project;
-DROP TABLE IF EXISTS subProject;
 DROP TABLE IF EXISTS tasks;
+DROP TABLE IF EXISTS subProject;
+DROP TABLE IF EXISTS project;
+DROP TABLE IF EXISTS users;
 -- Create new tables
 CREATE TABLE users
 (
