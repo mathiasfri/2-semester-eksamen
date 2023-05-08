@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Update Project</title>
+
+</head>
+<body>
+<h1>Update Project</h1>
+<div>
+  <form th:action="@{/projectCalculator/updatesubproject}" th:object="${updateSubProject}" method="post">
+    <label>
+      <input type="text" th:field="*{title}" placeholder="insert title"><br/><br/>
+    </label>
+
+    <label>
+      <input type="date" th:field="*{deadline}" placeholder="Insert deadline"><br/><br/>
+    </label>
+    <input type="hidden" th:field="*{projectId}">
+    <input type="hidden" th:field="*{id}">
+
+
+    <button type="submit">Submit</button>
+    <button type="reset">reset</button>
+  </form>
+</div>
+</body>
+</html>

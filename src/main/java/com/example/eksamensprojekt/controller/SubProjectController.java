@@ -33,6 +33,18 @@ public class SubProjectController {
         subProjectRepository.createProject(newSubProject);
         return "redirect:/projectCalculator/mainPage/" + newSubProject.getProjectId();
     }
+    @GetMapping("/updatesubproject/{sid}")
+    public String updateSubProject(@PathVariable int sid, Model model){
+        SubProject updateSubProject = subProjectRepository.getSpecificSubProject(sid);
+        model.addAttribute("updateSubProject", updateSubProject);
+        return"update-subproject";
+    }
+
+    @PostMapping("/updatesubproject")
+    public String updateUserSubProject(@ModelAttribute SubProject subProjectUpdate){
+        subProjectRepository.updateSubProject(subProjectUpdate);
+        return "redirect:/projectCalculator/mainPage/" + subProjectUpdate.getProjectId();
+    }
 }
 
 

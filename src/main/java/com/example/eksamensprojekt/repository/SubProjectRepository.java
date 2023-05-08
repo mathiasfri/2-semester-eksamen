@@ -36,22 +36,21 @@ public class SubProjectRepository {
             throw new RuntimeException(e);
         }
     }
-    public List<SubProject> getSubProjects(int projectId){
+    public List<SubProject> getSubProjects(int subProjectId){
         List<SubProject> subProjects = new ArrayList<>();
         try(Connection con = DriverManager.getConnection(url,user_id,user_pwd)) {
-            String SQL = "SELECT * FROM subProject WHERE project_id = ?";
+            String SQL = "SELECT * FROM subProject WHERE sub_id = ?";
             PreparedStatement pstmt = con.prepareStatement(SQL);
-            pstmt.setInt(1, projectId);
+            pstmt.setInt(1, subProjectId);
             ResultSet rs = pstmt.executeQuery();
 
             while(rs.next()){
-                int subProjectId = rs.getInt("sub_id");
                 String title = rs.getString("sub_title");
                 java.sql.Date sqlDeadLine = rs.getDate("sub_deadline");
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 String formattedDate = formatter.format(sqlDeadLine);
                 LocalDate deadline = sqlDeadLine.toLocalDate();
-                int id = rs.getInt("project_id");
+                int projectId = rs.getInt("project_id");
 
                 subProjects.add(new SubProject(subProjectId,title, deadline, projectId));
             }
@@ -60,5 +59,45 @@ public class SubProjectRepository {
             throw new RuntimeException(e);
         }
         return subProjects;
+    }
+    public SubProject getSpecificSubProject(int subProjectID){
+        SubProject subProject = null;
+
+        try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)){
+            String SQL = "SELECT * FROM subProject WHERE sub_id = ?";
+            PreparedStatement pstm = con.prepareStatement(SQL);
+            pstm.setInt(1, subProjectID);
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()){
+                String title = rs.getString("sub_title");
+                java.sql.Date sqlDeadLine = rs.getDate("sub_deadline");
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                String formattedDate = formatter.format(sqlDeadLine);
+                LocalDate deadline = sqlDeadLine.toLocalDate();
+                int projectID = rs.getInt("project_id");
+
+                subProject = new SubProject(subProjectID, title, deadline, projectID);
+            }
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return subProject;
+    }
+    public void updateSubProject(SubProject subProject){
+        try(Connection con = DriverManager.getConnection(url,user_id,user_pwd)) {
+            String SQL = "UPDATE subProject SET sub_title=?, sub_deadline=? WHERE sub_id = ?;";
+            PreparedStatement pstmt = con.prepareStatement(SQL);
+            pstmt.setString(1,subProject.getTitle());
+            LocalDate deadline = subProject.getDeadline();
+            java.sql.Date sqlDeadline = java.sql.Date.valueOf(deadline);
+            pstmt.setDate(2, sqlDeadline);
+            pstmt.setInt(3, subProject.getId());
+            pstmt.executeUpdate();
+
+        } catch (SQLException e){
+            throw new RuntimeException(e);
+        }
     }
 }
