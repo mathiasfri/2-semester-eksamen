@@ -1,8 +1,8 @@
 -- Create database if none exists
-CREATE DATABASE IF NOT EXISTS projectCalculator_db;
+CREATE DATABASE IF NOT EXISTS heroku_2df9a21eb11dede;
 
 -- Set/Use database as default
-USE projectCalculator_db;
+USE heroku_2df9a21eb11dede;
 
 -- Drop tables if they exist
 DROP TABLE IF EXISTS tasks;

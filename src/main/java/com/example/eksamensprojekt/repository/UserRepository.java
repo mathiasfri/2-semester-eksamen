@@ -21,7 +21,7 @@ public class UserRepository {
     public int createUser(User newUser) {
         int userId = 0;
         try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)) {
-            String SQL = "INSERT INTO users (user_email, user_password) values (?,?)";
+            String SQL = "INSERT INTO users (email, password) values (?,?)";
             PreparedStatement pstmt = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, newUser.getEmail());
             pstmt.setString(2, newUser.getPassword());
@@ -48,8 +48,8 @@ public class UserRepository {
 
             if (rs.next()) {
                 user.setUserId(rs.getInt("user_id"));
-                user.setEmail(rs.getString("user_email"));
-                user.setPassword(rs.getString("user_password"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));
             }
 
             return user;

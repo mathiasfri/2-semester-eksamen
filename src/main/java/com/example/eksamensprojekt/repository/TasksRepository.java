@@ -23,14 +23,14 @@ public class TasksRepository {
 
     public void createTask(Tasks task) {
         try(Connection con = DriverManager.getConnection(url,user_id,user_pwd)) {
-            String SQL = "INSERT INTO tasks(task_title, task_deadline, time_spent, sub_id) VALUES(?, ?, ?, ?)";
+            String SQL = "INSERT INTO tasks(deadline, sub_id, time_spent, title) VALUES(?, ?, ?, ?)";
             PreparedStatement pstmt = con.prepareStatement(SQL);
-            pstmt.setString(1, task.getTitle());
             LocalDate deadline = task.getDeadline();
             java.sql.Date sqlDeadLine = java.sql.Date.valueOf(deadline);
-            pstmt.setDate(2, sqlDeadLine);
+            pstmt.setDate(1, sqlDeadLine);
+            pstmt.setInt(2, task.getSubId());
             pstmt.setDouble(3, task.getTimeSpent());
-            pstmt.setInt(4, task.getSubId());
+            pstmt.setString(4, task.getTitle());
 
             pstmt.executeUpdate();
 
@@ -47,9 +47,9 @@ public class TasksRepository {
             ResultSet rs = pstmt.executeQuery();
 
             while(rs.next()){
-                int taskId = rs.getInt("task_id");
-                String title = rs.getString("task_title");
-                java.sql.Date sqlDeadLine = rs.getDate("task_deadline");
+                int taskId = rs.getInt("id");
+                String title = rs.getString("title");
+                java.sql.Date sqlDeadLine = rs.getDate("deadline");
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 String formattedDate = formatter.format(sqlDeadLine);
                 LocalDate deadline = sqlDeadLine.toLocalDate();
@@ -68,14 +68,14 @@ public class TasksRepository {
         Tasks task = null;
 
         try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)){
-            String SQL = "SELECT * FROM tasks WHERE task_id = ?";
+            String SQL = "SELECT * FROM tasks WHERE id = ?";
             PreparedStatement pstm = con.prepareStatement(SQL);
             pstm.setInt(1, taskId);
             ResultSet rs = pstm.executeQuery();
 
             while (rs.next()){
-                String title = rs.getString("task_title");
-                java.sql.Date sqlDeadLine = rs.getDate("task_deadline");
+                String title = rs.getString("title");
+                java.sql.Date sqlDeadLine = rs.getDate("deadline");
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 String formattedDate = formatter.format(sqlDeadLine);
                 LocalDate deadline = sqlDeadLine.toLocalDate();
@@ -92,7 +92,7 @@ public class TasksRepository {
     }
     public void updateTask(Tasks task){
         try(Connection con = DriverManager.getConnection(url,user_id,user_pwd)) {
-            String SQL = "UPDATE tasks SET task_title=?, task_deadline=?, time_spent=? WHERE task_id = ?;";
+            String SQL = "UPDATE tasks SET title=?, deadline=?, time_spent=? WHERE id = ?;";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setString(1,task.getTitle());
             LocalDate deadline = task.getDeadline();

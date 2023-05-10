@@ -22,7 +22,7 @@ public class ProjectRepository {
 
 public void createProject(Project project) {
     try(Connection con = DriverManager.getConnection(url,user_id,user_pwd)) {
-        String SQL = "INSERT INTO Project(project_title, project_deadline, project_budget, project_description, user_id) VALUES(?, ?, ?, ?,?)";
+        String SQL = "INSERT INTO Project(title, deadline, budget, description, user_id) VALUES(?, ?, ?, ?,?)";
         PreparedStatement pstmt = con.prepareStatement(SQL);
         pstmt.setString(1, project.getTitle());
         LocalDate deadline = project.getDeadline();
@@ -47,15 +47,15 @@ public void createProject(Project project) {
             ResultSet rs = pstmt.executeQuery();
 
             while(rs.next()){
-                int projectId = rs.getInt("project_id");
-                String title = rs.getString("project_title");
-                java.sql.Date sqlDeadLine = rs.getDate("project_deadline");
+                int projectId = rs.getInt("id");
+                String title = rs.getString("title");
+                java.sql.Date sqlDeadLine = rs.getDate("deadline");
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 String formattedDate = formatter.format(sqlDeadLine);
                 LocalDate deadline = sqlDeadLine.toLocalDate();
-                int budget = rs.getInt("project_budget");
+                int budget = rs.getInt("budget");
                 int id = rs.getInt("user_id");
-                String description = rs.getString("project_description");
+                String description = rs.getString("description");
 
                 projectList.add(new Project(projectId,title, deadline, budget, id, description));
             }
@@ -70,20 +70,20 @@ public void createProject(Project project) {
     Project project = null;
 
         try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)){
-            String SQL = "SELECT * FROM project WHERE project_id = ?";
+            String SQL = "SELECT * FROM project WHERE id = ?";
             PreparedStatement pstm = con.prepareStatement(SQL);
             pstm.setInt(1, projectID);
             ResultSet rs = pstm.executeQuery();
 
             while (rs.next()){
-                String title = rs.getString("project_title");
-                java.sql.Date sqlDeadLine = rs.getDate("project_deadline");
+                String title = rs.getString("title");
+                java.sql.Date sqlDeadLine = rs.getDate("deadline");
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 String formattedDate = formatter.format(sqlDeadLine);
                 LocalDate deadline = sqlDeadLine.toLocalDate();
-                int budget = rs.getInt("project_budget");
+                int budget = rs.getInt("budget");
                 int id = rs.getInt("user_id");
-                String description = rs.getString("project_description");
+                String description = rs.getString("description");
 
                 project = new Project(projectID, title, deadline, budget, id, description);
             }
@@ -95,7 +95,7 @@ public void createProject(Project project) {
     }
     public void updateProject(Project project){
         try(Connection con = DriverManager.getConnection(url,user_id,user_pwd)) {
-            String SQL = "UPDATE Project SET project_title=?, project_deadline=?, project_budget=?, project_description =? WHERE project_id = ?;";
+            String SQL = "UPDATE Project SET title=?, deadline=?, budget=?, description =? WHERE id = ?;";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setString(1,project.getTitle());
             LocalDate deadline = project.getDeadline();
@@ -113,16 +113,16 @@ public void createProject(Project project) {
     public List<Project> getAssignedProjects(int userId) {
         List<Project> assignedProjects = new ArrayList<>();
         try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)) {
-            String SQL = "SELECT * FROM project JOIN project_user ON project_user.project_id = project.project_id WHERE project_user.user_id = ?";
+            String SQL = "SELECT * FROM project JOIN project_user ON project_user.project_id = project.id WHERE project_user.user_id = ?";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setInt(1, userId);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
                 Project project = new Project();
-                project.setId(rs.getInt("project_id"));
-                project.setTitle(rs.getString("project_title"));
-                project.setDeadline(rs.getDate("project_deadline").toLocalDate());
+                project.setId(rs.getInt("id"));
+                project.setTitle(rs.getString("title"));
+                project.setDeadline(rs.getDate("deadline").toLocalDate());
                 // Set other project attributes as needed
 
                 assignedProjects.add(project);

@@ -22,7 +22,7 @@ public class SubProjectRepository {
 
     public void createProject(SubProject subProject) {
         try(Connection con = DriverManager.getConnection(url,user_id,user_pwd)) {
-            String SQL = "INSERT INTO subProject(sub_title, sub_deadline, project_id) VALUES(?, ?, ?)";
+            String SQL = "INSERT INTO subProject(title, deadline, project_id) VALUES(?, ?, ?)";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setString(1, subProject.getTitle());
             LocalDate deadline = subProject.getDeadline();
@@ -45,9 +45,9 @@ public class SubProjectRepository {
             ResultSet rs = pstmt.executeQuery();
 
             while(rs.next()){
-                int sub_id = rs.getInt("sub_id");
-                String title = rs.getString("sub_title");
-                java.sql.Date sqlDeadLine = rs.getDate("sub_deadline");
+                int sub_id = rs.getInt("id");
+                String title = rs.getString("title");
+                java.sql.Date sqlDeadLine = rs.getDate("deadline");
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 String formattedDate = formatter.format(sqlDeadLine);
                 LocalDate deadline = sqlDeadLine.toLocalDate();
@@ -64,18 +64,18 @@ public class SubProjectRepository {
         SubProject subProject = null;
 
         try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)){
-            String SQL = "SELECT * FROM subProject WHERE sub_id = ?";
+            String SQL = "SELECT * FROM subProject WHERE id = ?";
             PreparedStatement pstm = con.prepareStatement(SQL);
             pstm.setInt(1, subProjectID);
             ResultSet rs = pstm.executeQuery();
 
             while (rs.next()){
-                String title = rs.getString("sub_title");
-                java.sql.Date sqlDeadLine = rs.getDate("sub_deadline");
+                String title = rs.getString("title");
+                java.sql.Date sqlDeadLine = rs.getDate("deadline");
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 String formattedDate = formatter.format(sqlDeadLine);
                 LocalDate deadline = sqlDeadLine.toLocalDate();
-                int projectID = rs.getInt("project_id");
+                int projectID = rs.getInt("id");
 
                 subProject = new SubProject(subProjectID, title, deadline, projectID);
             }
@@ -87,7 +87,7 @@ public class SubProjectRepository {
     }
     public void updateSubProject(SubProject subProject){
         try(Connection con = DriverManager.getConnection(url,user_id,user_pwd)) {
-            String SQL = "UPDATE subProject SET sub_title=?, sub_deadline=? WHERE sub_id = ?;";
+            String SQL = "UPDATE subProject SET title=?, deadline=? WHERE id = ?;";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setString(1,subProject.getTitle());
             LocalDate deadline = subProject.getDeadline();
