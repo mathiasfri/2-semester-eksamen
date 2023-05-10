@@ -2,10 +2,9 @@ package com.example.eksamensprojekt.controller;
 
 import com.example.eksamensprojekt.models.Project;
 import com.example.eksamensprojekt.models.SubProject;
-import com.example.eksamensprojekt.repository.ProjectRepository;
-import com.example.eksamensprojekt.repository.ProjectUserRepository;
-import com.example.eksamensprojekt.repository.SubProjectRepository;
-import com.example.eksamensprojekt.repository.UserRepository;
+import com.example.eksamensprojekt.models.Tasks;
+import com.example.eksamensprojekt.repository.*;
+import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +18,14 @@ public class ProjectController {
     private ProjectRepository projectRepository;
     private SubProjectRepository subProjectRepository;
     private ProjectUserRepository projectUserRepository;
+    private TasksRepository tasksRepository;
 
     public ProjectController(ProjectRepository projectRepository, SubProjectRepository subProjectRepository,
-    ProjectUserRepository projectUserRepository) {
+    ProjectUserRepository projectUserRepository, TasksRepository tasksRepository) {
         this.projectRepository = projectRepository;
         this.subProjectRepository = subProjectRepository;
         this.projectUserRepository = projectUserRepository;
+        this.tasksRepository = tasksRepository;
     }
     @GetMapping("/createproject/{uid}")
     public String createProject(@PathVariable int uid, Model model){
@@ -46,10 +47,19 @@ public class ProjectController {
         String projectTitle = project.getTitle();
         model.addAttribute("projectTitle", projectTitle);
 
+        String projectDescription = project.getDescription();
+        model.addAttribute("projectDescription", projectDescription);
+
         model.addAttribute("projectID", pid);
 
         List<SubProject> subProjects = subProjectRepository.getSubProjects(pid);
         model.addAttribute("subProjects", subProjects);
+
+        for (SubProject s : subProjects){
+            List<Tasks> tasks = tasksRepository.getTaskList(s.getId());
+            s.setTasks(tasks);
+        }
+
 
         return "viewProject";
     }

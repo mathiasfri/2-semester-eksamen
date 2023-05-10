@@ -36,23 +36,23 @@ public class SubProjectRepository {
             throw new RuntimeException(e);
         }
     }
-    public List<SubProject> getSubProjects(int subProjectId){
+    public List<SubProject> getSubProjects(int project_id){
         List<SubProject> subProjects = new ArrayList<>();
         try(Connection con = DriverManager.getConnection(url,user_id,user_pwd)) {
-            String SQL = "SELECT * FROM subProject WHERE sub_id = ?";
+            String SQL = "SELECT * FROM subProject WHERE project_id = ?";
             PreparedStatement pstmt = con.prepareStatement(SQL);
-            pstmt.setInt(1, subProjectId);
+            pstmt.setInt(1, project_id);
             ResultSet rs = pstmt.executeQuery();
 
             while(rs.next()){
+                int sub_id = rs.getInt("sub_id");
                 String title = rs.getString("sub_title");
                 java.sql.Date sqlDeadLine = rs.getDate("sub_deadline");
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                 String formattedDate = formatter.format(sqlDeadLine);
                 LocalDate deadline = sqlDeadLine.toLocalDate();
-                int projectId = rs.getInt("project_id");
 
-                subProjects.add(new SubProject(subProjectId,title, deadline, projectId));
+                subProjects.add(new SubProject(sub_id,title, deadline, project_id));
             }
 
         } catch (SQLException e) {
