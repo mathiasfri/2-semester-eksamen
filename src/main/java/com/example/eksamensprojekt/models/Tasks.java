@@ -1,12 +1,17 @@
 package com.example.eksamensprojekt.models;
 
-import java.time.LocalDate;
+import jakarta.persistence.*;
 
+import java.time.LocalDate;
+@Entity
+@Table(name = "tasks")
 public class Tasks {
-   private double timeSpent;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private double timeSpent;
     private String title;
     private LocalDate deadline;
-    private int id;
     private int subId;
 
     public Tasks() {

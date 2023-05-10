@@ -1,9 +1,16 @@
 package com.example.eksamensprojekt.models;
 
+import jakarta.persistence.*;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+
+@Entity
+@Table(name = "users")
 public class User {
-private int userId;
-private String email;
-private String password;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int userId;
+    private String email;
+    private String password;
 
 public User() {
 
