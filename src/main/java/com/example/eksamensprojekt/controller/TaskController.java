@@ -16,10 +16,11 @@ public class TaskController {
     public TaskController(TasksRepository tasksRepository) {
         this.tasksRepository = tasksRepository;
     }
-    @GetMapping("/createtask/{uid}")
-    public String createTask(@PathVariable int uid, Model model){
+    @GetMapping("/createtask/{sid}")
+    public String createTask(@PathVariable int sid, Model model){
         Tasks newTask = new Tasks();
-        newTask.setSubId(uid);
+        newTask.setSubId(sid);
+
         model.addAttribute("newTask", newTask);
         return "create-task";
     }

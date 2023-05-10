@@ -3,24 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>Your project</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/viewProject.css}">
 </head>
 <body>
 <main>
-    <h1 th:text="'Viewing project - ' + ${projectTitle}"></h1>
+    <h1 class="bold" th:text="'Viewing project - ' + ${projectTitle}"></h1>
+    <h4 th:text="${projectDescription}"></h4>
 
 
-    <table>
-        <tr th:if="${subProjects.isEmpty()}">
-            <td colspan="3">No sub-projects made... Create a sub-project!</td>
-        </tr>
-        <tr th:unless="${subProjects.isEmpty()}" th:each="sl : ${subProjects}">
-            <td th:text="${sl.getTitle()}"></td>
-            <td th:text="${sl.getDeadline()}"></td>
-            <td>
-                <a th:href="@{'/projectCalculator/deletesubproject/'+ ${sl.getProjectId()} + '/' + ${sl.getId()} }">Delete sub-project</a>
-            </td>
-        </tr>
-    </table>
+    <div class="sub-projects-container">
+        <div th:if="${subProjects.isEmpty()}">
+            <p>No sub-projects made... Create a sub-project!</p>
+        </div>
+        <div th:unless="${subProjects.isEmpty()}" th:each="sl : ${subProjects}" class="sub-project-card">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${sl.getTitle()}"></h5>
+                    <h6 class="card-subtitle mb-2 text-body-secondary"
+                        th:text="'Deadline: ' + ${sl.getDeadline()}"></h6>
+                    <ul>
+                        <li th:each="task : ${sl.getTasks()}" th:if="${task.getSubId() == sl.getId()}">
+                            <div>
+                                <p th:text="${task.getTitle()}"></p>
+                                <p th:text="'Deadline: '+ ${task.getDeadline()}"></p>
+                                <p th:text="'Time spent: ' + ${task.getTimeSpent()}"></p>
+                            </div>
+                        </li>
+                    </ul>
+                    <a th:href="@{'/projectCalculator/createtask/' + ${sl.getId()}}" class="card-link">Create Task</a>
+                    <a th:href="@{'/projectCalculator/deletesubproject/'+ ${sl.getProjectId()} + '/' + ${sl.getId()}}"
+                       class="card-link">Delete sub-project</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <form th:action="@{'/projectCalculator/assignuser/' + ${projectID}}" method="post">
         <label for="email">Assign User:</label>
@@ -32,5 +51,8 @@
     <br>
     <button onclick="history.back()">Go back</button>
 </main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
 </body>
 </html>

@@ -1,0 +1,9 @@
+.sub-projects-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -10px;
+}
+
+.sub-project-card {
+    padding: 10px;
+}
