@@ -1,6 +1,12 @@
 package com.example.eksamensprojekt.models;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "project_user")
 public class ProjectUser {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
     private int projectId;
 

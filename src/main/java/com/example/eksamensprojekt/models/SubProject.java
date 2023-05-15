@@ -1,14 +1,21 @@
 package com.example.eksamensprojekt.models;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "subproject")
 public class SubProject {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String title;
     private LocalDate deadline;
-    private int id;
     private int projectId;
+    @OneToMany
     private List<Tasks> tasks = new ArrayList<>();
 
 

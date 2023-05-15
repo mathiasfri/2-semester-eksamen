@@ -1,12 +1,24 @@
 package com.example.eksamensprojekt.models;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "tasks")
 public class Tasks {
-   private double timeSpent;
-    private String title;
-    private LocalDate deadline;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "title")
+    private String title;
+    @Column(name = "time_spent", columnDefinition = "DOUBLE")
+    private double timeSpent;
+
+    @Column(name = "deadline", columnDefinition = "DATE")
+    private LocalDate deadline;
+
+    @Column(name = "sub_id", columnDefinition = "INTEGER")
     private int subId;
 
     public Tasks() {
