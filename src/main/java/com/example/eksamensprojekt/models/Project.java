@@ -1,18 +1,12 @@
 package com.example.eksamensprojekt.models;
 
-import jakarta.persistence.*;
-
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "project")
 public class Project {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
     private LocalDate deadline;
     private int budget;
     private String title;
+    private int id;
     private int userId;
     private String description;
 
