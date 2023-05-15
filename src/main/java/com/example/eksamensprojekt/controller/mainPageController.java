@@ -4,10 +4,7 @@ import com.example.eksamensprojekt.models.Project;
 import com.example.eksamensprojekt.models.SubProject;
 import com.example.eksamensprojekt.models.Tasks;
 import com.example.eksamensprojekt.models.User;
-import com.example.eksamensprojekt.repository.ProjectRepository;
-import com.example.eksamensprojekt.repository.SubProjectRepository;
-import com.example.eksamensprojekt.repository.TasksRepository;
-import com.example.eksamensprojekt.repository.UserRepository;
+import com.example.eksamensprojekt.repository.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,14 +20,16 @@ public class mainPageController {
     private ProjectRepository projectRepository;
     private SubProjectRepository subProjectRepository;
     private TasksRepository tasksRepository;
-
+    private TasksUserRepository tasksUserRepository;
     public mainPageController(UserRepository userRepository, LoginController loginController, ProjectRepository projectRepository,
-                              SubProjectRepository subProjectRepository, TasksRepository tasksRepository) {
+                              SubProjectRepository subProjectRepository, TasksRepository tasksRepository,
+                              TasksUserRepository tasksUserRepository) {
         this.userRepository = userRepository;
         this.loginController = loginController;
         this.projectRepository = projectRepository;
         this.subProjectRepository = subProjectRepository;
         this.tasksRepository = tasksRepository;
+        this.tasksUserRepository = tasksUserRepository;
     }
     @GetMapping("/create")
     public String createUser(Model model){
@@ -70,5 +69,18 @@ public class mainPageController {
         model.addAttribute("assignedProjects", assignedProjects);
         return "assignedProjects";
     }
+    @GetMapping("/assignedsubprojects/{spid}")
+    public String getAssignedSubProjects(@PathVariable int spid, Model model) {
+        List<SubProject> assignedSubProjects = subProjectRepository.getAssignedSubProjects(spid);
+        model.addAttribute("assignedSubProjects", assignedSubProjects);
+        return "assignedSubProjects";
+    }
+    @GetMapping("/assignedtasks/{tid}")
+    public String getAssignedTasks(@PathVariable int tid, Model model) {
+        List<Tasks> assignedTasks = tasksRepository.getAssignedTasks(tid);
+        model.addAttribute("assignedTasks", assignedTasks);
+        return "assignedTasks";
+    }
+
 
 }

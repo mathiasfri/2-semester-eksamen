@@ -100,4 +100,26 @@ public class SubProjectRepository {
             throw new RuntimeException(e);
         }
     }
+    public List<SubProject> getAssignedSubProjects(int userId) {
+        List<SubProject> assignedSubProjects = new ArrayList<>();
+        try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)) {
+            String SQL = "SELECT * FROM subproject JOIN subproject_user ON subproject_user.sub_id = subproject.sub_id WHERE subproject_user.user_id = ?";
+            PreparedStatement pstmt = con.prepareStatement(SQL);
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                SubProject subProject = new SubProject();
+                subProject.setId(rs.getInt("sub_id"));
+                subProject.setTitle(rs.getString("sub_title"));
+                subProject.setDeadline(rs.getDate("sub_deadline").toLocalDate());
+                // Set other project attributes as needed
+
+                assignedSubProjects.add(subProject);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return assignedSubProjects;
+    }
 }

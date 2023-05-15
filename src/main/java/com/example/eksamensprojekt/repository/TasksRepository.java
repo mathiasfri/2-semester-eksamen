@@ -106,4 +106,27 @@ public class TasksRepository {
             throw new RuntimeException(e);
         }
     }
+    public List<Tasks> getAssignedTasks(int userId) {
+        List<Tasks> assignedTasks = new ArrayList<>();
+        try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)) {
+            String SQL = "SELECT * FROM tasks JOIN tasks_user ON tasks_user.task_id = tasks.task_id WHERE tasks_user.user_id = ?";
+            PreparedStatement pstmt = con.prepareStatement(SQL);
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Tasks task = new Tasks();
+                task.setId(rs.getInt("task_id"));
+                task.setTitle(rs.getString("task_title"));
+                task.setDeadline(rs.getDate("task_deadline").toLocalDate());
+                task.setTimeSpent(rs.getDouble("time_spent"));
+                // Set other project attributes as needed
+
+                assignedTasks.add(task);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return assignedTasks;
+    }
 }

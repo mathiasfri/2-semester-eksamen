@@ -25,6 +25,7 @@
             <td th:text="${pl.getTitle()}"></td>
             <td th:text="${pl.getDeadline()}"></td>
             <td th:text="${pl.getBudget()}"></td>
+
             <td>
                 <a th:href="@{'/projectCalculator/project/' + ${pl.getId()}}">View</a>
                 <a th:href="@{'/projectCalculator/updateproject/'+ ${pl.getId()}}">Update project</a>
@@ -32,6 +33,13 @@
                 <a th:href="@{'/projectCalculator/assignedprojects/' + ${userId}}">
                     <button type="button">Assigned Projects</button>
                 </a>
+                <a th:href="@{'/projectCalculator/assignedsubprojects/' + ${userId}}">
+                    <button type="button">Assigned SubProjects</button>
+                </a>
+                <a th:href="@{'/projectCalculator/assignedtasks/' + ${userId}}">
+                    <button type="button">Assigned Tasks</button>
+                </a>
+
 
             </td>
         </tr>
@@ -46,6 +54,11 @@
             <td>
                 <a th:href="@{'/projectCalculator/updatesubproject/' + ${sl.getId()}}">Update sub-project</a>
                 <a th:href="@{'/projectCalculator/deletesubproject/'+ ${sl.getProjectId()} + '/' + ${sl.getId()} }">Delete sub-project</a>
+                <form th:action="@{'/projectCalculator/assignusertosub/' + ${sl.getId()}}" method="post">
+                    <label for="email">Assign User to subProject:</label>
+                    <input type="text" id="email" name="email" required>
+                    <button type="submit">Assign User</button>
+                </form>
 
 
             </td>
@@ -61,8 +74,12 @@
             <td th:text="${tl.getTimeSpent()}"></td>
             <td>
                 <a th:href="@{'/projectCalculator/updatetask/'+ ${tl.getId()}}">Update task</a>
-                <a th:href="@{'/projectCalculator/deletesubproject/'+ ${tl.getSubId()} + '/' + ${tl.getId()} }">Delete sub-project</a>
-
+                <a th:href="@{'/projectCalculator/deletetask/'+ ${tl.getSubId()} + '/' + ${tl.getId()} }">Delete task</a>
+                <form th:action="@{'/projectCalculator/assignusertotask/' + ${tl.getId()}}" method="post">
+                    <label for="email">Assign User to task:</label>
+                    <input type="text" id="email" name="email" required>
+                    <button type="submit">Assign User</button>
+                </form>
 
             </td>
         </tr>

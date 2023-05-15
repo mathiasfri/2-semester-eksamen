@@ -19,13 +19,15 @@ public class ProjectController {
     private SubProjectRepository subProjectRepository;
     private ProjectUserRepository projectUserRepository;
     private TasksRepository tasksRepository;
+    private SubProjectUserRepository subProjectUserRepository;
 
     public ProjectController(ProjectRepository projectRepository, SubProjectRepository subProjectRepository,
-    ProjectUserRepository projectUserRepository, TasksRepository tasksRepository) {
+    ProjectUserRepository projectUserRepository, TasksRepository tasksRepository, SubProjectUserRepository subProjectUserRepository) {
         this.projectRepository = projectRepository;
         this.subProjectRepository = subProjectRepository;
         this.projectUserRepository = projectUserRepository;
         this.tasksRepository = tasksRepository;
+        this.subProjectUserRepository = subProjectUserRepository;
     }
     @GetMapping("/createproject/{uid}")
     public String createProject(@PathVariable int uid, Model model){
@@ -63,10 +65,12 @@ public class ProjectController {
 
         return "viewProject";
     }
+
     @PostMapping("/assignuser/{projectId}")
-    public String assignUserToProject(@PathVariable int projectId, @RequestParam("email") String userEmail) {
+    public String assignUserToProject(@PathVariable int projectId, @RequestParam("email") String userEmail, Model model) {
         List<Integer> listOfUserIds = new ArrayList<>();
         int userId = projectUserRepository.getUserIdByEmail(userEmail);
+        model.addAttribute("projectID", projectId);
         if(userId != -1) {
             listOfUserIds.add(userId);
             projectUserRepository.assignUsersToProject(projectId, listOfUserIds);
@@ -74,6 +78,7 @@ public class ProjectController {
 
         return "redirect:/projectCalculator/mainPage/" + projectId;
     }
+
     @GetMapping("/updateproject/{pid}")
     public String updateProject(@PathVariable int pid, Model model){
         Project updateProject = projectRepository.getSpecificProject(pid);
