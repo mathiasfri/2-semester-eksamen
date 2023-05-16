@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Sign Up</title>
+  <link rel="stylesheet" th:href="@{/main.css}">
 </head>
 <body>
-<h1>Create user account!</h1>
+<h1 class="centered">Create user account!</h1>
 <div>
   <form th:action="@{/projectCalculator/adduser}" th:object="${newUser}" method="post">
     <label>

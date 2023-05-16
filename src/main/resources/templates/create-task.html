@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Create a task</title>
-  <link rel="stylesheet" th:href="@{/create.css}">
+  <link rel="stylesheet" th:href="@{/main.css}">
 </head>
 <body>
-<h1>Create a task</h1>
+<h1 class="centered">Create a task</h1>
 <div>
   <form th:action="@{/projectCalculator/addtask}" th:object="${newTask}" method="post">
     <label>

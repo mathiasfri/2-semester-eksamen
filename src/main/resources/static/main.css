@@ -1,0 +1,40 @@
+
+h1 {
+    color: darkblue;
+    font-family: Arial, serif;
+}
+
+label {
+    font-size: large;
+    font-family: Arial, serif;
+}
+
+input {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    border: 1px solid #ccc;
+    padding: 4px;
+}
+
+button {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 15%;
+    height: 7%;
+}
+
+.centered {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 99%;
+    border: 2px;
+    padding: 5px;
+}
+

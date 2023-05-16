@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Create a SubProject</title>
-  <link rel="stylesheet" th:href="@{/create.css}">
+  <link rel="stylesheet" th:href="@{/main.css}">
 </head>
 <body>
-<h1>Create a SubProject</h1>
+<h1 class="centered">Create a SubProject</h1>
 <div>
   <form th:action="@{/projectCalculator/addsubproject}" th:object="${newSubProject}" method="post">
     <label>
