@@ -1,4 +1,4 @@
--- Create database if none exists
+-- Create database if none exists.
 CREATE DATABASE IF NOT EXISTS projectCalculator_db;
 
 -- Set/Use database as default
