@@ -49,7 +49,7 @@ CREATE TABLE subProject
     project_id      INTEGER,
     user_id    INTEGER,
     PRIMARY KEY (id),
-    FOREIGN KEY (project_id) REFERENCES project (id)
+    FOREIGN KEY (project_id) REFERENCES project (id) ON DELETE CASCADE
 );
 
 CREATE TABLE tasks
@@ -60,8 +60,8 @@ CREATE TABLE tasks
     time_spent      DOUBLE,
     sub_id          INTEGER,
     PRIMARY KEY (id),
-    FOREIGN KEY (sub_id) REFERENCES subProject (id)
-);
+    FOREIGN KEY (sub_id) REFERENCES subProject (id) ON DELETE CASCADE
+    );
 
 CREATE TABLE project_user
 (
@@ -100,7 +100,7 @@ CREATE TABLE subproject_tasks
 );
 
 -- Insert random test data into users table
-INSERT INTO users (mail, password)
+INSERT INTO users (email, password)
 VALUES ('user1@example.com', 'password1'),
        ('user2@example.com', 'password2'),
        ('user3@example.com', 'password3');
