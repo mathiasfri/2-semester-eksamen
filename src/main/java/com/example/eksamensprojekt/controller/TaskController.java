@@ -37,7 +37,7 @@ public class TaskController {
     @PostMapping("/addtask")
     public String addTask(@ModelAttribute Tasks newTask){
         tasksRepository.createTask(newTask);
-        return "redirect:/projectCalculator/mainPage/" + newTask.getSubId();
+        return "redirect:/projectCalculator/mainPage/" + newTask.getId();
     }
     @GetMapping("/updatetask/{tid}")
     public String updateTask(@PathVariable int tid, Model model){
@@ -61,5 +61,10 @@ public class TaskController {
         }
 
         return "redirect:/projectCalculator/mainPage/" + taskId;
+    }
+    @DeleteMapping("/deletetask/{tid}")
+    public String deleteProject(@PathVariable int tid, @ModelAttribute Tasks taskDelete) {
+        tasksRepository.deleteTask(tid);
+        return "redirect:/projectCalculator/mainPage/" + taskDelete.getId();
     }
 }

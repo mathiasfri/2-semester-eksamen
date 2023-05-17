@@ -129,4 +129,14 @@ public class TasksRepository {
         }
         return assignedTasks;
     }
+    public void deleteTask(int projectId) {
+        try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)) {
+            String SQL = "DELETE FROM tasks WHERE id = ?";
+            PreparedStatement pstmt = con.prepareStatement(SQL);
+            pstmt.setInt(1, projectId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
