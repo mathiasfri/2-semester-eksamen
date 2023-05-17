@@ -24,7 +24,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 CREATE TABLE users
 (
     user_id       INTEGER NOT NULL AUTO_INCREMENT,
-    mail    VARCHAR(50) UNIQUE,
+    email    VARCHAR(50) UNIQUE,
     password VARCHAR(50),
     PRIMARY KEY (user_id)
 );

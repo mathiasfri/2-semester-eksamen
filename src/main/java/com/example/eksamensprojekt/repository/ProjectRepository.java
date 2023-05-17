@@ -95,6 +95,7 @@ public void createProject(Project project) {
         }
         return project;
     }
+
     public void updateProject(Project project){
         try(Connection con = DriverManager.getConnection(url,user_id,user_pwd)) {
             String SQL = "UPDATE Project SET title=?, deadline=?, budget=?, description =? WHERE id = ?;";
@@ -133,6 +134,33 @@ public void createProject(Project project) {
             throw new RuntimeException(e);
         }
         return assignedProjects;
+    }
+    public Project getSpecificAssignedProject(int projectID){
+        Project assignedProject = null;
+
+        try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)){
+            String SQL = "SELECT * FROM project JOIN project_user ON project_user.project_id = project.id WHERE project_user.user_id = ?";
+            PreparedStatement pstm = con.prepareStatement(SQL);
+            pstm.setInt(1, projectID);
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()){
+                String title = rs.getString("title");
+                java.sql.Date sqlDeadLine = rs.getDate("deadline");
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                String formattedDate = formatter.format(sqlDeadLine);
+                LocalDate deadline = sqlDeadLine.toLocalDate();
+                int budget = rs.getInt("budget");
+                int id = rs.getInt("user_id");
+                String description = rs.getString("description");
+
+                assignedProject = new Project(projectID, title, deadline, budget, id, description);
+            }
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return assignedProject;
     }
 
 

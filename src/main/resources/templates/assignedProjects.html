@@ -16,9 +16,10 @@
       <td th:text="${project.title}"></td>
       <td th:text="${project.description}"></td>
       <td th:text="${project.deadline}"></td>
-      <td>
-        <a th:href="@{'/projectCalculator/viewproject/' + ${project.getUserId}}">View Project</a>
-      </td>
+      <a th:href="@{'/projectCalculator/project/' + ${project.getId()}}"
+         class="btn btn-primary btn-lg btn-block">
+        <button type="button" class="btn btn-primary btn-lg btn-block">View</button>
+      </a>
     </tr>
   </table>
 
