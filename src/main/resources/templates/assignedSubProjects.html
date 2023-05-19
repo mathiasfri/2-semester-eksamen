@@ -2,24 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Assigned Sub-Projects</title>
+  <title>Assigned Projects</title>
 </head>
 <body>
 <main>
-  <h1>Assigned Sub-Projects</h1>
+  <h1>Assigned Projects</h1>
 
   <table>
     <tr th:if="${assignedSubProjects.isEmpty()}">
-      <td colspan="4">No assigned sub-projects found.</td>
+      <td colspan="4">No assigned projects found.</td>
     </tr>
-  <tr th:each="subproject : ${assignedSubProjects}">
-    <td th:text="${subproject.title}"></td>
-    <td th:text="${subproject.deadline}"></td>
-    <a th:href="@{'/projectCalculator/project/' + ${spid}}"
-       class="btn btn-primary btn-lg btn-block">
-      <button type="button" class="btn btn-primary btn-lg btn-block">View</button>
-    </a>
-  </tr>
+    <tr th:each="project : ${assignedSubProjects}">
+      <td th:text="${project.getTitle()}"></td>
+      <td th:text="${project.getDeadline()}"></td>
+      <a th:href="@{'/projectCalculator/project/' + ${specificProject.getId()}}"
+         class="btn btn-primary btn-lg btn-block">
+        <button type="button" class="btn btn-primary btn-lg btn-block">View</button>
+      </a>
+    </tr>
   </table>
 
   <br>

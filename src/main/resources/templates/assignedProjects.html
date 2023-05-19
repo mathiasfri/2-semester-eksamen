@@ -13,9 +13,9 @@
       <td colspan="4">No assigned projects found.</td>
     </tr>
     <tr th:each="project : ${assignedProjects}">
-      <td th:text="${project.title}"></td>
-      <td th:text="${project.description}"></td>
-      <td th:text="${project.deadline}"></td>
+      <td th:text="${project.getTitle()}"></td>
+      <td th:text="${project.getDescription()}"></td>
+      <td th:text="${project.getDeadline()}"></td>
       <a th:href="@{'/projectCalculator/project/' + ${project.getId()}}"
          class="btn btn-primary btn-lg btn-block">
         <button type="button" class="btn btn-primary btn-lg btn-block">View</button>

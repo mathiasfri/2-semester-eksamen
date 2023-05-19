@@ -24,6 +24,10 @@
                     <h5 class="card-title" th:text="${sl.getTitle()}"></h5>
                     <h6 class="card-subtitle mb-2 text-body-secondary"
                         th:text="'Deadline: ' + ${sl.getDeadline()}"></h6>
+                    <a th:href="@{'/projectCalculator/updatesubproject/'+ ${sl.getId()}}"
+                       class="btn btn-primary btn-lg btn-block">
+                        <button type="button" class="btn btn-primary btn-lg btn-block">Update</button>
+                    </a>
                     <form th:action="@{'/projectCalculator/assignusertosub/' + ${sl.getId()}}" method="post">
                         <label for="email">Assign User to subProject:</label>
                         <input type="text" id="mail" name="email" required>
@@ -35,6 +39,10 @@
                                 <p th:text="${task.getTitle()}"></p>
                                 <p th:text="'Deadline: '+ ${task.getDeadline()}"></p>
                                 <p th:text="'Time spent: ' + ${task.getTimeSpent()}"></p>
+                                <a th:href="@{'/projectCalculator/updatetask/'+ ${task.getId()}}"
+                                   class="btn btn-primary btn-lg btn-block">
+                                    <button type="button" class="btn btn-primary btn-lg btn-block">Update</button>
+                                </a>
                                 <form th:action="@{'/projectCalculator/deletetask/' + ${task.getId()}}" method="post">
                                     <input type="hidden" name="_method" value="delete">
                                     <button type="submit" onclick="return confirm('Are you sure you want to delete this task?')" class="btn btn-danger">Delete</button>
