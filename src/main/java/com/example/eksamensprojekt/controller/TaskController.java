@@ -1,5 +1,6 @@
 package com.example.eksamensprojekt.controller;
 
+import com.example.eksamensprojekt.models.Project;
 import com.example.eksamensprojekt.models.SubProject;
 import com.example.eksamensprojekt.models.Tasks;
 import com.example.eksamensprojekt.repository.ProjectUserRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,12 +21,14 @@ public class TaskController {
     private TasksRepository tasksRepository;
     private ProjectUserRepository projectUserRepository;
     private TasksUserRepository tasksUserRepository;
+    private SubProjectRepository subProjectRepository;
 
     public TaskController(TasksRepository tasksRepository, ProjectUserRepository projectUserRepository, TasksUserRepository
-                          tasksUserRepository) {
+                          tasksUserRepository, SubProjectRepository subProjectRepository) {
         this.tasksRepository = tasksRepository;
         this.projectUserRepository = projectUserRepository;
         this.tasksUserRepository = tasksUserRepository;
+        this.subProjectRepository = subProjectRepository;
     }
     @GetMapping("/createtask/{sid}")
     public String createTask(@PathVariable int sid, Model model){
@@ -35,21 +39,42 @@ public class TaskController {
         return "create-task";
     }
     @PostMapping("/addtask")
-    public String addTask(@ModelAttribute Tasks newTask){
+    public String addTask(@ModelAttribute Tasks newTask, Model model){
+        int subId = newTask.getSubId();
+        SubProject subProject = subProjectRepository.getSpecificSubProject(subId);
+        LocalDate subProjectDeadline = subProject.getDeadline();
+        LocalDate taskDeadline = newTask.getDeadline();
+        if(taskDeadline.isAfter(subProjectDeadline)) {
+            model.addAttribute("newTask", newTask);
+            model.addAttribute("subProjectDeadLine", subProjectDeadline);
+            model.addAttribute("deadlineError", true);
+            return "create-task";
+        }
         tasksRepository.createTask(newTask);
-        return "redirect:/projectCalculator/mainPage/" + newTask.getId();
+        return "redirect:/projectCalculator/mainPage/" + subId;
     }
     @GetMapping("/updatetask/{tid}")
     public String updateTask(@PathVariable int tid, Model model){
-        Tasks updateTask = tasksRepository.getSpecificTask(tid);
-        model.addAttribute("updateTask", updateTask);
-        return"update-Task";
+            Tasks updateTask = tasksRepository.getSpecificTask(tid);
+            model.addAttribute("updateTask", updateTask);
+            return"update-Task";
     }
 
     @PostMapping("/updatetask")
-    public String updateUserTask(@ModelAttribute Tasks taskUpdate){
-        tasksRepository.updateTask(taskUpdate);
-        return "redirect:/projectCalculator/mainPage/" + taskUpdate.getId();
+    public String updateUserTask(@ModelAttribute Tasks updateTask, Model model){
+
+        int subId = updateTask.getSubId();
+        SubProject subProject = subProjectRepository.getSpecificSubProject(subId);
+        LocalDate subProjectDeadline = subProject.getDeadline();
+        LocalDate taskDeadline = updateTask.getDeadline();
+        if(taskDeadline.isAfter(subProjectDeadline)) {
+            model.addAttribute("updateTask", updateTask);
+            model.addAttribute("subProjectDeadLine", subProjectDeadline);
+            model.addAttribute("updatedDeadLineError", true);
+            return "update-task";
+        }
+        tasksRepository.updateTask(updateTask);
+        return "redirect:/projectCalculator/mainPage/" + updateTask.getId();
     }
     @PostMapping("/assignusertotask/{taskId}")
     public String assignUserToSubProject(@PathVariable int taskId, @RequestParam("email") String userEmail) {

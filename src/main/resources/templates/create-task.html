@@ -25,6 +25,9 @@
 
     <button type="submit">Submit</button>
     <button type="reset">Reset</button>
+    <div th:if="${deadlineError}" class="error-message">
+      Task deadline cannot exceed the subproject deadline.
+    </div>
   </form>
 </div>
 </body>

@@ -61,19 +61,19 @@ public class SubProjectController {
     }
 
     @PostMapping("/updatesubproject")
-    public String updateUserSubProject(@ModelAttribute SubProject subProjectUpdate, Model model){
+    public String updateUserSubProject(@ModelAttribute SubProject updateSubProject, Model model){
         // Method that doesn't allow user to type a date that exceeds project deadline.
-        int projectId = subProjectUpdate.getProjectId();
+        int projectId = updateSubProject.getProjectId();
         Project project = projectRepository.getSpecificProject(projectId);
-        LocalDate projectDeadline = project.getDeadline();
-        LocalDate subprojectDeadline = subProjectUpdate.getDeadline();
-        if(subprojectDeadline.isAfter(projectDeadline)) {
-            model.addAttribute("subProjectUpdate", subProjectUpdate);
-            model.addAttribute("projectDeadline", projectDeadline);
-            model.addAttribute("deadLineError", true);
-            return "create-subproject";
+        LocalDate updatedProjectDeadline = project.getDeadline();
+        LocalDate subprojectDeadline = updateSubProject.getDeadline();
+        if(subprojectDeadline.isAfter(updatedProjectDeadline)) {
+            model.addAttribute("updateSubProject", updateSubProject);
+            model.addAttribute("updatedProjectDeadline", updatedProjectDeadline);
+            model.addAttribute("updatedDeadLineError", true);
+            return "update-subproject";
         }
-        subProjectRepository.updateSubProject(subProjectUpdate);
+        subProjectRepository.updateSubProject(updateSubProject);
         return "redirect:/projectCalculator/mainPage/" + projectId;
     }
     @PostMapping("/assignusertosub/{subId}")

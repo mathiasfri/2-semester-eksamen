@@ -23,7 +23,9 @@
     <input type="hidden" th:field="*{subId}">
     <input type="hidden" th:field="*{id}">
 
-
+    <div th:if="${updatedDeadLineError}" class="error-message">
+      Task deadline cannot exceed the subproject deadline.
+    </div>
     <button type="submit">Submit</button>
     <button type="reset">reset</button>
   </form>
