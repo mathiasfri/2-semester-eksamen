@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,25 +20,37 @@ public class SubProjectController {
     private SubProjectRepository subProjectRepository;
     private ProjectUserRepository projectUserRepository;
     private SubProjectUserRepository subProjectUserRepository;
+    private ProjectRepository projectRepository;
 
     public SubProjectController(SubProjectRepository subProjectRepository, ProjectUserRepository projectUserRepository,
-                                SubProjectUserRepository subProjectUserRepository) {
+                                SubProjectUserRepository subProjectUserRepository, ProjectRepository projectRepository) {
         this.subProjectRepository = subProjectRepository;
         this.projectUserRepository = projectUserRepository;
         this.subProjectUserRepository = subProjectUserRepository;
+        this.projectRepository = projectRepository;
     }
     @GetMapping("/createsubproject/{pid}")
     public String createSubProject(@PathVariable int pid, Model model){
         SubProject newSubProject = new SubProject();
         newSubProject.setProjectId(pid);
-        model.addAttribute("newSubProject", newSubProject);
 
+        model.addAttribute("newSubProject", newSubProject);
         return "create-subproject";
     }
     @PostMapping("/addsubproject")
-    public String addSubProject(@ModelAttribute SubProject newSubProject){
+    public String addSubProject(@ModelAttribute SubProject newSubProject, Model model){
+        int projectId = newSubProject.getProjectId();
+        Project project = projectRepository.getSpecificProject(projectId);
+        LocalDate projectDeadline = project.getDeadline();
+        LocalDate subprojectDeadline = newSubProject.getDeadline();
+        if(subprojectDeadline.isAfter(projectDeadline)) {
+            model.addAttribute("newSubProject", newSubProject);
+            model.addAttribute("projectDeadline", projectDeadline);
+            model.addAttribute("deadLineError", true);
+            return "create-subproject";
+        }
         subProjectRepository.createProject(newSubProject);
-        return "redirect:/projectCalculator/mainPage/" + newSubProject.getProjectId();
+        return "redirect:/projectCalculator/mainPage/" + projectId;
     }
     @GetMapping("/updatesubproject/{sid}")
     public String updateSubProject(@PathVariable int sid, Model model){
