@@ -116,6 +116,8 @@ public class TaskController {
     }
     @DeleteMapping("/deletetask/{tid}")
     public String deleteProject(@PathVariable int tid, @ModelAttribute Tasks taskDelete) {
+        tasksRepository.deleteTask(tid);
+        /*
         // Retrieve the task to be deleted
         Tasks task = tasksRepository.getSpecificTask(tid);
 
@@ -124,7 +126,7 @@ public class TaskController {
 
         // Delete the task
         tasksRepository.deleteTask(tid);
-
+/*
         // Update the subproject's timeSpent
         double updatedSubProjectTimeSpent = subProjectRepository.calculateSubProjectTimeSpent(subProjectId);
         SubProject subProject = subProjectRepository.getSpecificSubProject(subProjectId);
@@ -138,7 +140,7 @@ public class TaskController {
         double updatedProjectTimeSpent = projectRepository.calculateProjectTimeSpent(projectId);
         Project project = projectRepository.getSpecificProject(projectId);
         project.setTimeSpent(updatedProjectTimeSpent);
-        projectRepository.updateProject(project);
+        projectRepository.updateProject(project); */
         return "redirect:/projectCalculator/mainPage/" + taskDelete.getId();
     }
 }
