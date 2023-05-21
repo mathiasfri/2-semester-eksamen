@@ -51,6 +51,10 @@ public class SubProjectController {
             return "create-subproject";
         }
         subProjectRepository.createProject(newSubProject);
+        double updatedProjectTimeSpent = projectRepository.calculateProjectTimeSpent(projectId);
+        project.setTimeSpent(updatedProjectTimeSpent);
+
+        projectRepository.updateProject(project);
         return "redirect:/projectCalculator/mainPage/" + projectId;
     }
     @GetMapping("/updatesubproject/{sid}")
@@ -74,6 +78,10 @@ public class SubProjectController {
             return "update-subproject";
         }
         subProjectRepository.updateSubProject(updateSubProject);
+
+        double updatedProjectTimeSpent = projectRepository.calculateProjectTimeSpent(projectId);
+        project.setTimeSpent(updatedProjectTimeSpent);
+        projectRepository.updateProject(project);
         return "redirect:/projectCalculator/mainPage/" + projectId;
     }
     @PostMapping("/assignusertosub/{subId}")
@@ -90,6 +98,14 @@ public class SubProjectController {
     @DeleteMapping("/deletesubproject/{pid}")
     public String deleteProject(@PathVariable int pid, @ModelAttribute SubProject subProjectDelete) {
         subProjectRepository.deleteSubProject(pid);
+
+        /*
+        int projectId = subProjectDelete.getProjectId();
+        Project project = projectRepository.getSpecificProject(projectId);
+        double updatedProjectTimeSpent = projectRepository.calculateProjectTimeSpent(projectId);
+        project.setTimeSpent(updatedProjectTimeSpent);
+        projectRepository.updateProject(project); */
+
         return "redirect:/projectCalculator/mainPage/" + subProjectDelete.getId();
     }
 }

@@ -36,6 +36,7 @@ CREATE TABLE project
     description VARCHAR(999),
     deadline DATE,
     budget DOUBLE,
+    time_spent DOUBLE,
     user_id INTEGER,
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
@@ -46,6 +47,7 @@ CREATE TABLE subProject
     id          INTEGER NOT NULL AUTO_INCREMENT,
     title       VARCHAR(30),
     deadline    DATE,
+    time_spent  DOUBLE,
     project_id  INTEGER,
     user_id     INTEGER,
     PRIMARY KEY (id),

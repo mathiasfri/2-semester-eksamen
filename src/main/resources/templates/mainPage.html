@@ -34,6 +34,8 @@
                         <p th:text="${pl.getBudget()} + ' DKK'"></p>
                         <p style="font-weight: bold" th:text="'Deadline'"></p>
                         <p th:text="${pl.getDeadline()}"></p>
+                        <p style="font-weight: bold" th:text="'timeSpent'"></p>
+                        <p th:text="${pl.getTimeSpent()}"></p>
                     </div>
                     <div>
                         <a th:href="@{'/projectCalculator/project/' + ${pl.getId()}}"

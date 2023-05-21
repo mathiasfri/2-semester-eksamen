@@ -15,17 +15,27 @@ public class Project {
     private String title;
     private int userId;
     private String description;
+    private double timeSpent;
 
     public Project() {
 
     }
-    public Project(int id, String title, LocalDate deadline, int budget, int userId, String description) {
+    public Project(int id, String title, LocalDate deadline, int budget, int userId, String description, double timeSpent) {
         this.title = title;
         this.deadline = deadline;
         this.budget = budget;
         this.id = id;
         this.userId = userId;
         this.description = description;
+        this.timeSpent = timeSpent;
+    }
+
+    public double getTimeSpent() {
+        return timeSpent;
+    }
+
+    public void setTimeSpent(double timeSpent) {
+        this.timeSpent = timeSpent;
     }
 
     public LocalDate getDeadline() {

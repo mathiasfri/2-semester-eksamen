@@ -14,6 +14,7 @@ public class SubProject {
     private int id;
     private String title;
     private LocalDate deadline;
+    private double timeSpent;
     private int projectId;
     @OneToMany
     private List<Tasks> tasks = new ArrayList<>();
@@ -22,11 +23,20 @@ public class SubProject {
     public SubProject() {
 
     }
-    public SubProject(int id, String title, LocalDate deadline, int projectId) {
+    public SubProject(int id, String title, LocalDate deadline,double timeSpent, int projectId) {
         this.title = title;
         this.deadline = deadline;
         this.id = id;
         this.projectId = projectId;
+        this.timeSpent = timeSpent;
+    }
+
+    public double getTimeSpent() {
+        return timeSpent;
+    }
+
+    public void setTimeSpent(double timeSpent) {
+        this.timeSpent = timeSpent;
     }
 
     public void setTitle(String title) {

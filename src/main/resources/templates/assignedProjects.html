@@ -16,6 +16,8 @@
       <td th:text="${project.getTitle()}"></td>
       <td th:text="${project.getDescription()}"></td>
       <td th:text="${project.getDeadline()}"></td>
+      <td th:text="${project.getBudget()}"></td>
+      <td th:text="${project.getTimeSpent()}"></td>
       <a th:href="@{'/projectCalculator/project/' + ${project.getId()}}"
          class="btn btn-primary btn-lg btn-block">
         <button type="button" class="btn btn-primary btn-lg btn-block">View</button>

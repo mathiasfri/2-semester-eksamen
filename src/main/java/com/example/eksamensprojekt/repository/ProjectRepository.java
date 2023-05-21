@@ -21,10 +21,15 @@ public class ProjectRepository {
     String user_id;
     @Value("${spring.datasource.password}")
     String user_pwd;
+    SubProjectRepository subProjectRepository;
+
+    public ProjectRepository(SubProjectRepository subProjectRepository) {
+        this.subProjectRepository = subProjectRepository;
+    }
 
 public void createProject(Project project) {
     try(Connection con = DriverManager.getConnection(url,user_id,user_pwd)) {
-        String SQL = "INSERT INTO Project(title, deadline, budget, description, user_id) VALUES(?, ?, ?, ?,?)";
+        String SQL = "INSERT INTO Project(title, deadline, budget, description, time_spent, user_id) VALUES(?, ?, ?, ?,?,?)";
         PreparedStatement pstmt = con.prepareStatement(SQL);
         pstmt.setString(1, project.getTitle());
         LocalDate deadline = project.getDeadline();
@@ -32,7 +37,8 @@ public void createProject(Project project) {
         pstmt.setDate(2, sqlDeadLine);
         pstmt.setInt(3, project.getBudget());
         pstmt.setString(4, project.getDescription());
-        pstmt.setInt(5, project.getUserId());
+        pstmt.setDouble(5, project.getTimeSpent());
+        pstmt.setInt(6, project.getUserId());
 
         pstmt.executeUpdate();
 
@@ -58,8 +64,9 @@ public void createProject(Project project) {
                 int budget = rs.getInt("budget");
                 int id = rs.getInt("user_id");
                 String description = rs.getString("description");
+                double timeSpent = rs.getDouble("time_spent");
 
-                projectList.add(new Project(projectId,title, deadline, budget, id, description));
+                projectList.add(new Project(projectId,title, deadline, budget, id, description, timeSpent));
             }
 
         } catch (SQLException e) {
@@ -86,8 +93,9 @@ public void createProject(Project project) {
                 int budget = rs.getInt("budget");
                 int id = rs.getInt("user_id");
                 String description = rs.getString("description");
+                double timeSpent = rs.getDouble("time_spent");
 
-                project = new Project(projectID, title, deadline, budget, id, description);
+                project = new Project(projectID, title, deadline, budget, id, description, timeSpent);
             }
         }
         catch (SQLException e){
@@ -98,7 +106,7 @@ public void createProject(Project project) {
 
     public void updateProject(Project project){
         try(Connection con = DriverManager.getConnection(url,user_id,user_pwd)) {
-            String SQL = "UPDATE Project SET title=?, deadline=?, budget=?, description =? WHERE id = ?;";
+            String SQL = "UPDATE Project SET title=?, deadline=?, budget=?, description =?, time_spent=? WHERE id = ?;";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setString(1,project.getTitle());
             LocalDate deadline = project.getDeadline();
@@ -106,7 +114,8 @@ public void createProject(Project project) {
             pstmt.setDate(2, sqlDeadline);
             pstmt.setInt(3, project.getBudget());
             pstmt.setString(4, project.getDescription());
-            pstmt.setInt(5, project.getId());
+            pstmt.setDouble(5, project.getTimeSpent());
+            pstmt.setInt(6, project.getId());
             pstmt.executeUpdate();
 
         } catch (SQLException e){
@@ -126,6 +135,8 @@ public void createProject(Project project) {
                 project.setId(rs.getInt("id"));
                 project.setTitle(rs.getString("title"));
                 project.setDeadline(rs.getDate("deadline").toLocalDate());
+                project.setDescription(rs.getString("description"));
+                project.setTimeSpent(rs.getDouble("time_spent"));
                 // Set other project attributes as needed
 
                 assignedProjects.add(project);
@@ -153,8 +164,9 @@ public void createProject(Project project) {
                 int budget = rs.getInt("budget");
                 int id = rs.getInt("user_id");
                 String description = rs.getString("description");
+                double timeSpent = rs.getDouble("time_spent");
 
-                assignedProject = new Project(projectID, title, deadline, budget, id, description);
+                assignedProject = new Project(projectID, title, deadline, budget, id, description, timeSpent);
             }
         }
         catch (SQLException e){
@@ -170,6 +182,22 @@ public void createProject(Project project) {
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+    public double calculateProjectTimeSpent(int projectId) {
+        List<SubProject> subProjects = subProjectRepository.getSubProjects(projectId);
+        Project project = getSpecificProject(projectId);
+
+        // Check if there are any subprojects
+        if (subProjects != null && !subProjects.isEmpty()) {
+            double total = 0;
+            for (SubProject subproject : subProjects) {
+                total += subproject.getTimeSpent();
+            }
+            return total;
+        } else {
+            // No subprojects exist, return the user-provided value
+            return project.getTimeSpent();
         }
     }
 

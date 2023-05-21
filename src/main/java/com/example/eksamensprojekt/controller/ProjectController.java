@@ -52,6 +52,7 @@ public class ProjectController {
         String projectDescription = project.getDescription();
         model.addAttribute("projectDescription", projectDescription);
 
+
         model.addAttribute("projectID", pid);
 
         List<SubProject> subProjects = subProjectRepository.getSubProjects(pid);

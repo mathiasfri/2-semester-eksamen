@@ -3,10 +3,7 @@ package com.example.eksamensprojekt.controller;
 import com.example.eksamensprojekt.models.Project;
 import com.example.eksamensprojekt.models.SubProject;
 import com.example.eksamensprojekt.models.Tasks;
-import com.example.eksamensprojekt.repository.ProjectUserRepository;
-import com.example.eksamensprojekt.repository.SubProjectRepository;
-import com.example.eksamensprojekt.repository.TasksRepository;
-import com.example.eksamensprojekt.repository.TasksUserRepository;
+import com.example.eksamensprojekt.repository.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,13 +19,15 @@ public class TaskController {
     private ProjectUserRepository projectUserRepository;
     private TasksUserRepository tasksUserRepository;
     private SubProjectRepository subProjectRepository;
+    private ProjectRepository projectRepository;
 
     public TaskController(TasksRepository tasksRepository, ProjectUserRepository projectUserRepository, TasksUserRepository
-                          tasksUserRepository, SubProjectRepository subProjectRepository) {
+                          tasksUserRepository, SubProjectRepository subProjectRepository, ProjectRepository projectRepository) {
         this.tasksRepository = tasksRepository;
         this.projectUserRepository = projectUserRepository;
         this.tasksUserRepository = tasksUserRepository;
         this.subProjectRepository = subProjectRepository;
+        this.projectRepository = projectRepository;
     }
     @GetMapping("/createtask/{sid}")
     public String createTask(@PathVariable int sid, Model model){
@@ -51,6 +50,19 @@ public class TaskController {
             return "create-task";
         }
         tasksRepository.createTask(newTask);
+        /*
+        double updatedSubProjectTimeSpent = subProjectRepository.calculateSubProjectTimeSpent(subId);
+        subProject.setTimeSpent(updatedSubProjectTimeSpent);
+        subProjectRepository.updateSubProject(subProject);
+
+        // Get the project ID based on the subproject ID
+        int projectId = subProject.getProjectId();
+
+        // Update the project's timeSpent
+        double updatedProjectTimeSpent = projectRepository.calculateProjectTimeSpent(projectId);
+        Project project = projectRepository.getSpecificProject(projectId);
+        project.setTimeSpent(updatedProjectTimeSpent);
+        projectRepository.updateProject(project); */
         return "redirect:/projectCalculator/mainPage/" + subId;
     }
     @GetMapping("/updatetask/{tid}")
@@ -74,7 +86,22 @@ public class TaskController {
             return "update-task";
         }
         tasksRepository.updateTask(updateTask);
-        return "redirect:/projectCalculator/mainPage/" + updateTask.getId();
+
+        /*
+        // Update subproject's timeSpent
+        int subProjectId = subProject.getId();
+        int projectId = subProject.getProjectId();
+        double updatedSubProjectTimeSpent = subProjectRepository.calculateSubProjectTimeSpent(subProjectId);
+        subProject.setTimeSpent(updatedSubProjectTimeSpent);
+        subProjectRepository.updateSubProject(subProject);
+
+        // Update project's timeSpent
+        double updatedProjectTimeSpent = projectRepository.calculateProjectTimeSpent(projectId);
+        Project project = projectRepository.getSpecificProject(projectId);
+        project.setTimeSpent(updatedProjectTimeSpent);
+        projectRepository.updateProject(project); */
+
+        return "redirect:/projectCalculator/mainPage/" + updateTask.getId(); //projectId
     }
     @PostMapping("/assignusertotask/{taskId}")
     public String assignUserToSubProject(@PathVariable int taskId, @RequestParam("email") String userEmail) {
@@ -89,7 +116,29 @@ public class TaskController {
     }
     @DeleteMapping("/deletetask/{tid}")
     public String deleteProject(@PathVariable int tid, @ModelAttribute Tasks taskDelete) {
+        // Retrieve the task to be deleted
+        Tasks task = tasksRepository.getSpecificTask(tid);
+
+        // Get the subproject ID
+        int subProjectId = task.getSubId();
+
+        // Delete the task
         tasksRepository.deleteTask(tid);
+
+        // Update the subproject's timeSpent
+        double updatedSubProjectTimeSpent = subProjectRepository.calculateSubProjectTimeSpent(subProjectId);
+        SubProject subProject = subProjectRepository.getSpecificSubProject(subProjectId);
+        subProject.setTimeSpent(updatedSubProjectTimeSpent);
+        subProjectRepository.updateSubProject(subProject);
+
+        // Get the project ID based on the subproject ID
+        int projectId = subProject.getProjectId();
+
+        // Update the project's timeSpent
+        double updatedProjectTimeSpent = projectRepository.calculateProjectTimeSpent(projectId);
+        Project project = projectRepository.getSpecificProject(projectId);
+        project.setTimeSpent(updatedProjectTimeSpent);
+        projectRepository.updateProject(project);
         return "redirect:/projectCalculator/mainPage/" + taskDelete.getId();
     }
 }

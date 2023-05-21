@@ -24,6 +24,8 @@
                     <h5 class="card-title" th:text="${sl.getTitle()}"></h5>
                     <h6 class="card-subtitle mb-2 text-body-secondary"
                         th:text="'Deadline: ' + ${sl.getDeadline()}"></h6>
+                    <h7 class="card-subtitle mb-2 text-body-secondary"
+                        th:text="'Timespent: ' + ${sl.getTimeSpent()}"></h7>
                     <a th:href="@{'/projectCalculator/updatesubproject/'+ ${sl.getId()}}"
                        class="btn btn-primary btn-lg btn-block">
                         <button type="button" class="btn btn-primary btn-lg btn-block">Update</button>
