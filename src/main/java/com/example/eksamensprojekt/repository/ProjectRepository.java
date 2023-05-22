@@ -188,6 +188,10 @@ public void createProject(Project project) {
         List<SubProject> subProjects = subProjectRepository.getSubProjects(projectId);
         Project project = getSpecificProject(projectId);
 
+        if(subProjects.isEmpty()) {
+            return 0;
+        }
+
         // Check if there are any subprojects
         if (subProjects != null && !subProjects.isEmpty()) {
             double total = 0;

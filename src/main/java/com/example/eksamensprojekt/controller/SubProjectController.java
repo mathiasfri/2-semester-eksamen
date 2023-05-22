@@ -96,17 +96,17 @@ public class SubProjectController {
         return "redirect:/projectCalculator/mainPage/" + subId;
     }
     @DeleteMapping("/deletesubproject/{pid}")
-    public String deleteProject(@PathVariable int pid, @ModelAttribute SubProject subProjectDelete) {
+    public String deleteProject(@PathVariable int pid) {
+        SubProject subProjectDelete = subProjectRepository.getSpecificSubProject(pid);
+        int projectId = subProjectDelete.getProjectId();
         subProjectRepository.deleteSubProject(pid);
 
-        /*
-        int projectId = subProjectDelete.getProjectId();
         Project project = projectRepository.getSpecificProject(projectId);
         double updatedProjectTimeSpent = projectRepository.calculateProjectTimeSpent(projectId);
         project.setTimeSpent(updatedProjectTimeSpent);
-        projectRepository.updateProject(project); */
+        projectRepository.updateProject(project);
 
-        return "redirect:/projectCalculator/mainPage/" + subProjectDelete.getId();
+        return "redirect:/projectCalculator/mainPage/" + projectId;
     }
 }
 
