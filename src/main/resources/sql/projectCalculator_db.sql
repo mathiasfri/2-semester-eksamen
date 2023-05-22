@@ -108,24 +108,24 @@ VALUES ('user1@example.com', 'password1'),
        ('user3@example.com', 'password3');
 
 -- Insert random test data into project table
-INSERT INTO project (title, description, deadline, budget, user_id)
-VALUES ('Project 1', 'Description for Project 1', '2023-05-30', 1000.00, 1),
-       ('Project 2', 'Description for Project 2', '2023-06-15', 2000.00, 2),
-       ('Project 3', 'Description for Project 3', '2023-07-01', 1500.00, 3);
+INSERT INTO project (title, description, deadline, budget, time_spent, user_id)
+VALUES ('Project 1', 'Description for Project 1', '2023-05-30', 1000.00, 3, 1),
+       ('Project 2', 'Description for Project 2', '2023-06-15', 2000.00, 3, 2),
+       ('Project 3', 'Description for Project 3', '2023-07-01', 1500.00,3, 3);
 
 -- Insert random test data into subProject table
-INSERT INTO subProject (title, deadline, project_id, user_id)
-VALUES ('Subproject 1', '2023-05-31', 1, 1),
-       ('Subproject 2', '2023-06-10', 1, 2),
-       ('Subproject 3', '2023-06-20', 2, 2),
-       ('Subproject 4', '2023-07-05', 3, 3);
+INSERT INTO subProject (title, deadline,time_spent, project_id, user_id)
+VALUES ('Subproject 1', '2023-05-31', 4, 1, 1),
+       ('Subproject 2', '2023-06-10', 5, 1, 2),
+       ('Subproject 3', '2023-06-20', 4, 2, 2),
+       ('Subproject 4', '2023-07-05', 5, 3, 3);
 
 -- Insert random test data into tasks table
 INSERT INTO tasks (title, deadline, time_spent, sub_id)
-VALUES ('Task 1', '2023-05-31', 2.5, 1),
-       ('Task 2', '2023-06-05', 1.5, 1),
-       ('Task 3', '2023-06-10', 3.0, 2),
-       ('Task 4', '2023-06-15', 0.5, 2);
+VALUES ('Task 1', '2023-05-31', 3, 1),
+       ('Task 2', '2023-06-05', 1, 1),
+       ('Task 3', '2023-06-10', 3, 2),
+       ('Task 4', '2023-06-15', 5, 2);
 
 -- Insert random test data into project_user table
 INSERT INTO project_user (project_id, user_id)
