@@ -79,18 +79,30 @@ public class TaskController {
 
     @PostMapping("/updatetask")
     public String updateUserTask(@ModelAttribute Tasks updateTask, Model model){
-
         int subId = updateTask.getSubId();
         SubProject subProject = subProjectRepository.getSpecificSubProject(subId);
         LocalDate subProjectDeadline = subProject.getDeadline();
         LocalDate taskDeadline = updateTask.getDeadline();
-        if(taskDeadline.isAfter(subProjectDeadline)) {
+        if (taskDeadline.isAfter(subProjectDeadline)) {
             model.addAttribute("updateTask", updateTask);
             model.addAttribute("subProjectDeadLine", subProjectDeadline);
             model.addAttribute("updatedDeadLineError", true);
             return "update-task";
         }
+
         tasksRepository.updateTask(updateTask);
+
+        // Update the time spent for the subProject and project
+        double subProjectTimeSpent = subProjectRepository.calculateSubProjectTimeSpent(subId);
+        subProject.setTimeSpent(subProjectTimeSpent);
+        subProjectRepository.updateSubProject(subProject);
+
+        int projectId = subProject.getProjectId();
+        double projectTimeSpent = projectRepository.calculateProjectTimeSpent(projectId);
+        Project project = projectRepository.getSpecificProject(projectId);
+        project.setTimeSpent(projectTimeSpent);
+        projectRepository.updateProject(project);
+
         return "redirect:/projectCalculator/mainPage/" + updateTask.getId();
     }
     @PostMapping("/assignusertotask/{taskId}")
@@ -106,7 +118,22 @@ public class TaskController {
     }
     @DeleteMapping("/deletetask/{tid}")
     public String deleteProject(@PathVariable int tid, @ModelAttribute Tasks taskDelete) {
+        Tasks deletedTask = tasksRepository.getSpecificTask(tid);
+        int subId = deletedTask.getSubId();
+        int projectId;
+
         tasksRepository.deleteTask(tid);
+
+        SubProject subProjectDelete = subProjectRepository.getSpecificSubProject(subId);
+        projectId = subProjectDelete.getProjectId();
+        subProjectRepository.deleteSubProject(subId);
+
+        // Update the time spent for the project
+        double updatedProjectTimeSpent = projectRepository.calculateProjectTimeSpent(projectId);
+        Project project = projectRepository.getSpecificProject(projectId);
+        project.setTimeSpent(updatedProjectTimeSpent);
+        projectRepository.updateProject(project);
+
         return "redirect:/projectCalculator/mainPage/" + taskDelete.getId();
     }
 }
