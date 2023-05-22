@@ -20,7 +20,11 @@ public class SubProjectRepository {
     String user_id;
     @Value("${spring.datasource.password}")
     String user_pwd;
-    TasksRepository tasksRepository = new TasksRepository();
+    TasksRepository tasksRepository;
+
+    public SubProjectRepository(TasksRepository tasksRepository) {
+        this.tasksRepository = tasksRepository;
+    }
 
     public void createProject(SubProject subProject) {
         try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)) {
@@ -144,10 +148,16 @@ public class SubProjectRepository {
         }
     }
 
+
     public double calculateSubProjectTimeSpent(int subProjectId) {
         List<Tasks> tasks = tasksRepository.getTaskList(subProjectId);
         SubProject subProject = getSpecificSubProject(subProjectId);
 
+        if(tasks.isEmpty()) {
+            return 0;
+        }
+
+        // Check if there are any subprojects
         if (tasks != null && !tasks.isEmpty()) {
             double total = 0;
             for (Tasks task : tasks) {
@@ -155,6 +165,7 @@ public class SubProjectRepository {
             }
             return total;
         } else {
+            // No subprojects exist, return the user-provided value
             return subProject.getTimeSpent();
         }
     }
