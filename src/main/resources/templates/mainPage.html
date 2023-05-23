@@ -38,7 +38,7 @@
                         <p th:text="${pl.getTimeSpent()}"></p>
                     </div>
                     <div>
-                        <a th:href="@{'/projectCalculator/project/' + ${pl.getId()}}"
+                        <a th:href="@{'/projectCalculator/project/' + ${pl.getId()} + '?userId=' + ${userId}}"
                            class="btn btn-primary btn-lg btn-block">
                             <button type="button" class="btn btn-primary btn-lg btn-block">View</button>
                         </a>

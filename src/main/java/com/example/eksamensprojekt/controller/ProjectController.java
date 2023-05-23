@@ -3,6 +3,7 @@ package com.example.eksamensprojekt.controller;
 import com.example.eksamensprojekt.models.Project;
 import com.example.eksamensprojekt.models.SubProject;
 import com.example.eksamensprojekt.models.Tasks;
+import com.example.eksamensprojekt.models.User;
 import com.example.eksamensprojekt.repository.*;
 import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Controller;
@@ -20,14 +21,17 @@ public class ProjectController {
     private ProjectUserRepository projectUserRepository;
     private TasksRepository tasksRepository;
     private SubProjectUserRepository subProjectUserRepository;
+    private UserRepository userRepository;
 
     public ProjectController(ProjectRepository projectRepository, SubProjectRepository subProjectRepository,
-    ProjectUserRepository projectUserRepository, TasksRepository tasksRepository, SubProjectUserRepository subProjectUserRepository) {
+    ProjectUserRepository projectUserRepository, TasksRepository tasksRepository, SubProjectUserRepository subProjectUserRepository
+    , UserRepository userRepository) {
         this.projectRepository = projectRepository;
         this.subProjectRepository = subProjectRepository;
         this.projectUserRepository = projectUserRepository;
         this.tasksRepository = tasksRepository;
         this.subProjectUserRepository = subProjectUserRepository;
+        this.userRepository = userRepository;
     }
     @GetMapping("/createproject/{uid}")
     public String createProject(@PathVariable int uid, Model model){
@@ -43,8 +47,16 @@ public class ProjectController {
     }
 
     @GetMapping("/project/{pid}")
-    public String projectView(@PathVariable int pid, Model model){
+    public String projectView(@PathVariable int pid, @RequestParam("userId") int userId, Model model) {
+        User loggedInUser = userRepository.getUser(userId);
+
         Project project = projectRepository.getSpecificProject(pid);
+
+        // Check if the logged-in user has access to the project
+        if (project.getUserId() != loggedInUser.getUserId()) {
+            // Handle unauthorized access, e.g., redirect to an error page
+            return "error";
+        }
 
         String projectTitle = project.getTitle();
         model.addAttribute("projectTitle", projectTitle);
@@ -52,20 +64,19 @@ public class ProjectController {
         String projectDescription = project.getDescription();
         model.addAttribute("projectDescription", projectDescription);
 
-
         model.addAttribute("projectID", pid);
 
         List<SubProject> subProjects = subProjectRepository.getSubProjects(pid);
         model.addAttribute("subProjects", subProjects);
 
-        for (SubProject s : subProjects){
+        for (SubProject s : subProjects) {
             List<Tasks> tasks = tasksRepository.getTaskList(s.getId());
             s.setTasks(tasks);
         }
 
-
         return "viewProject";
     }
+
     @GetMapping("/viewassignedproject/{pid}")
     public String assignedprojectView(@PathVariable int pid, Model model){
         Project assignedProject = projectRepository.getSpecificAssignedProject(pid);
