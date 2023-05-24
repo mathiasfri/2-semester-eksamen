@@ -36,6 +36,8 @@ public class ProjectController {
     public String createProject(@PathVariable int uid, Model model){
         Project newProject = new Project();
         newProject.setUserId(uid);
+        User user = userRepository.getUser(uid);
+        model.addAttribute("userId", user.getUserId());
         model.addAttribute("newProject", newProject);
         return "create-project";
     }
@@ -56,7 +58,7 @@ public class ProjectController {
             // Handle unauthorized access, e.g., redirect to an error page
             return "noaccess";
         }
-
+        model.addAttribute("userId", loggedInUser.getUserId());
         String projectTitle = project.getTitle();
         model.addAttribute("projectTitle", projectTitle);
 
@@ -118,6 +120,8 @@ public class ProjectController {
     public String updateProject(@PathVariable int pid, Model model){
         Project updateProject = projectRepository.getSpecificProject(pid);
         model.addAttribute("updateProject", updateProject);
+        User user = userRepository.getUser(updateProject.getUserId());
+        model.addAttribute("userId", user.getUserId());
         return"update-project";
     }
 

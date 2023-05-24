@@ -77,6 +77,8 @@ public class mainPageController {
         List<SubProject> assignedSubProjects = subProjectRepository.getAssignedSubProjects(spid);
         model.addAttribute("assignedSubProjects", assignedSubProjects);
         model.addAttribute("specificProject", assignedProject);
+        User user = userRepository.getUser(spid);
+        model.addAttribute("userId", user.getUserId());
 
         return "assignedSubProjects";
     }
@@ -85,7 +87,8 @@ public class mainPageController {
         List<Tasks> assignedTasks = tasksRepository.getAssignedTasks(tid);
         model.addAttribute("pid", projectRepository.getSpecificProject(tid));
         model.addAttribute("assignedTasks", assignedTasks);
-
+        User user = userRepository.getUser(tid);
+        model.addAttribute("userId", user.getUserId());
         return "assignedTasks";
     }
 

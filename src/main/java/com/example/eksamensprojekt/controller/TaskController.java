@@ -3,6 +3,7 @@ package com.example.eksamensprojekt.controller;
 import com.example.eksamensprojekt.models.Project;
 import com.example.eksamensprojekt.models.SubProject;
 import com.example.eksamensprojekt.models.Tasks;
+import com.example.eksamensprojekt.models.User;
 import com.example.eksamensprojekt.repository.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,20 +21,26 @@ public class TaskController {
     private TasksUserRepository tasksUserRepository;
     private SubProjectRepository subProjectRepository;
     private ProjectRepository projectRepository;
+    private UserRepository userRepository;
 
     public TaskController(TasksRepository tasksRepository, ProjectUserRepository projectUserRepository, TasksUserRepository
-            tasksUserRepository, SubProjectRepository subProjectRepository, ProjectRepository projectRepository) {
+            tasksUserRepository, SubProjectRepository subProjectRepository, ProjectRepository projectRepository,
+                          UserRepository userRepository) {
         this.tasksRepository = tasksRepository;
         this.projectUserRepository = projectUserRepository;
         this.tasksUserRepository = tasksUserRepository;
         this.subProjectRepository = subProjectRepository;
         this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
     }
     @GetMapping("/createtask/{sid}")
     public String createTask(@PathVariable int sid, Model model){
         Tasks newTask = new Tasks();
         newTask.setSubId(sid);
-
+       SubProject subProject = subProjectRepository.getSpecificSubProject(sid);
+       Project project = projectRepository.getSpecificProject(subProject.getProjectId());
+       User user = userRepository.getUser(project.getUserId());
+       model.addAttribute("userId", user.getUserId());
         model.addAttribute("newTask", newTask);
         return "create-task";
     }
@@ -64,6 +71,7 @@ public class TaskController {
         project.setTimeSpent(projectTimeSpent);
         projectRepository.updateProject(project);
 
+
         return "redirect:/projectCalculator/mainPage/" + subId;
     }
 
@@ -73,6 +81,10 @@ public class TaskController {
     @GetMapping("/updatetask/{tid}")
     public String updateTask(@PathVariable int tid, Model model){
         Tasks updateTask = tasksRepository.getSpecificTask(tid);
+        SubProject subProject = subProjectRepository.getSpecificSubProject(updateTask.getSubId());
+        Project project = projectRepository.getSpecificProject(subProject.getProjectId());
+        User user = userRepository.getUser(project.getUserId());
+        model.addAttribute("userId", user.getUserId());
         model.addAttribute("updateTask", updateTask);
         return"update-Task";
     }

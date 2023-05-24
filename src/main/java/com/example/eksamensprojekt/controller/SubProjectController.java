@@ -2,10 +2,8 @@ package com.example.eksamensprojekt.controller;
 
 import com.example.eksamensprojekt.models.Project;
 import com.example.eksamensprojekt.models.SubProject;
-import com.example.eksamensprojekt.repository.ProjectRepository;
-import com.example.eksamensprojekt.repository.ProjectUserRepository;
-import com.example.eksamensprojekt.repository.SubProjectRepository;
-import com.example.eksamensprojekt.repository.SubProjectUserRepository;
+import com.example.eksamensprojekt.models.User;
+import com.example.eksamensprojekt.repository.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,13 +19,16 @@ public class SubProjectController {
     private ProjectUserRepository projectUserRepository;
     private SubProjectUserRepository subProjectUserRepository;
     private ProjectRepository projectRepository;
+    private UserRepository userRepository;
 
     public SubProjectController(SubProjectRepository subProjectRepository, ProjectUserRepository projectUserRepository,
-                                SubProjectUserRepository subProjectUserRepository, ProjectRepository projectRepository) {
+                                SubProjectUserRepository subProjectUserRepository, ProjectRepository projectRepository,
+                                UserRepository userRepository) {
         this.subProjectRepository = subProjectRepository;
         this.projectUserRepository = projectUserRepository;
         this.subProjectUserRepository = subProjectUserRepository;
         this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
     }
     @GetMapping("/createsubproject/{pid}")
     public String createSubProject(@PathVariable int pid, Model model){
@@ -35,6 +36,9 @@ public class SubProjectController {
         newSubProject.setProjectId(pid);
 
         model.addAttribute("newSubProject", newSubProject);
+        Project project = projectRepository.getSpecificProject(newSubProject.getProjectId());
+        User user = userRepository.getUser(project.getUserId());
+        model.addAttribute("userId", user.getUserId());
         return "create-subproject";
     }
     @PostMapping("/addsubproject")
@@ -60,6 +64,9 @@ public class SubProjectController {
     @GetMapping("/updatesubproject/{sid}")
     public String updateSubProject(@PathVariable int sid, Model model){
         SubProject updateSubProject = subProjectRepository.getSpecificSubProject(sid);
+        Project project = projectRepository.getSpecificProject(updateSubProject.getProjectId());
+        User user = userRepository.getUser(project.getUserId());
+        model.addAttribute("userId", user.getUserId());
         model.addAttribute("updateSubProject", updateSubProject);
         return"update-subproject";
     }
