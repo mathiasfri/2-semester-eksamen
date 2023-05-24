@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Assigned Projects</title>
+  <link rel="stylesheet" th:href="@{/header-footer.css}">
+  <link rel="stylesheet" th:href="@{/main.css}">
 </head>
 <body>
+<div th:insert="~{fragments/header-footer.html :: header}"></div>
 <main>
   <h1>Assigned Projects</h1>
 
@@ -21,10 +24,7 @@
       </td>
     </tr>
   </table>
-
-  <br>
-  <br>
-  <button onclick="history.back()">Go Back</button>
 </main>
+<div th:insert="~{fragments/header-footer.html :: footer}"></div>
 </body>
 </html>

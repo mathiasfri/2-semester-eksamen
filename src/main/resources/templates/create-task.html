@@ -4,28 +4,34 @@
   <meta charset="UTF-8">
   <title>Create a task</title>
   <link rel="stylesheet" th:href="@{/main.css}">
+  <link rel="stylesheet" th:href="@{/header-footer.css}">
 </head>
 <body>
+<div th:insert="~{fragments/header-footer.html :: header}"></div>
 <h1 class="centered">Create a task</h1>
 <div>
   <form th:action="@{/projectCalculator/addtask}" th:object="${newTask}" method="post">
-    <label>
+    <p>
+      <label class="centered">Title:</label>
       <input type="text" th:field="*{title}" placeholder="type title"><br/><br/>
-    </label>
+    </p>
 
-    <label>
+    <p>
+      <label class="centered">Deadline:</label>
       <input type="date" th:field="*{deadline}" placeholder="type date"><br/><br/>
-    </label>
+    </p>
 
-    <label>
+    <p>
+      <label class="centered">Time spent (in hours):</label>
       <input type="number" th:field="*{timeSpent}" placeholder="type title"><br/><br/>
-    </label>
+    </p>
 
     <input type="hidden" th:field="*{subId}">
 
-    <button type="submit">Submit</button>
-    <button type="reset">Reset</button>
+    <p><button class="default-button centered" type="submit">Submit</button></p>
+    <p><button class="default-button centered" type="reset">Reset</button></p>
   </form>
 </div>
+<div th:insert="~{fragments/header-footer.html :: footer}"></div>
 </body>
 </html>

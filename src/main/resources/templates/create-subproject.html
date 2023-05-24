@@ -4,26 +4,29 @@
   <meta charset="UTF-8">
   <title>Create a SubProject</title>
   <link rel="stylesheet" th:href="@{/main.css}">
+  <link rel="stylesheet" th:href="@{/header-footer.css}">
 </head>
 <body>
+<div th:insert="~{fragments/header-footer.html :: header}"></div>
 <h1 class="centered">Create a SubProject</h1>
 <div>
   <form th:action="@{/projectCalculator/addsubproject}" th:object="${newSubProject}" method="post">
-    <label>
+    <p>
+      <label class="centered">Title:</label>
       <input type="text" th:field="*{title}" placeholder="type title"><br/><br/>
-    </label>
+    </p>
 
-    <label>
+    <p>
+      <label class="centered">Deadline:</label>
       <input type="date" th:field="*{deadline}" placeholder="type deadline"><br/><br/>
-    </label>
-
-
+    </p>
 
     <input type="hidden" th:field="*{projectId}">
 
-    <button type="submit">Submit</button>
-    <button type="reset">Reset</button>
+    <p><button class="default-button centered" type="submit">Submit</button></p>
+    <p><button class="default-button centered" type="reset">Reset</button></p>
   </form>
 </div>
+<div th:insert="~{fragments/header-footer.html :: footer}"></div>
 </body>
 </html>

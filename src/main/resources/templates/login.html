@@ -8,7 +8,7 @@
 <body>
 <h1 class="centered">Login</h1>
 <form action="/projectCalculator/login" method="post">
-  <p th:if="${wrongCredentials}" class="error">Forkert brugerid eller password</p>
+  <p th:if="${wrongCredentials}" class="centered">Forkert brugerid eller password</p>
 
   <p><label class="centered">Email:</label>
     <input name="uid" type="text" autofocus placeholder="input email"></p>
@@ -16,7 +16,7 @@
   <p><label class="centered">Password:</label>
     <input name="pw" type="password" placeholder="input password"></p>
   <p>
-    <button type="submit">Login</button>
+    <button class="centered" type="submit">Login</button>
   </p>
 </form>
 </body>

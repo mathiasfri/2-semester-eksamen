@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Header</title>
+    <link rel="stylesheet" th:href="@{/header-footer.css}">
+</head>
+<body>
+<header>
+    <nav>
+        <div class="header-container">
+            <ul class="header-left">
+                <li><a th:href="@{/projectCalculator/mainPage/{uid}(uid=${userId})}">Main Page</a></li>
+            </ul>
+            <ul class="header-center">
+                <li><a th:href="@{'/projectCalculator/assignedprojects/' + ${userId}}">Assigned Projects</a></li>
+                <li><a th:href="@{'/projectCalculator/assignedsubprojects/' + ${userId}}">Assigned SubProjects</a></li>
+                <li><a th:href="@{'/projectCalculator/assignedtasks/' + ${userId}}">Assigned Tasks</a></li>
+            </ul>
+
+            <ul class="header-right">
+                <li><a th:href="@{/projectCalculator/login}">Log in</a></li>
+                <li><a th:href="@{/projectCalculator/logout}">Log out</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<footer>
+    <div class="footer-container">
+        <p>Created by Osama Mansour & Mathias Fridthjof</p>
+    </div>
+</footer>
+</body>
+</html>

@@ -3,26 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <title>Update Project</title>
-
+  <link rel="stylesheet" th:href="@{/header-footer.css}">
 </head>
 <body>
+<div th:insert="~{fragments/header-footer.html :: header}"></div>
 <h1>Update Project</h1>
 <div>
   <form th:action="@{/projectCalculator/updatesubproject}" th:object="${updateSubProject}" method="post">
-    <label>
+    <p>
+      <label class="centered">Title:</label>
       <input type="text" th:field="*{title}" placeholder="insert title"><br/><br/>
-    </label>
+    </p>
 
-    <label>
+    <p>
+      <label class="centered">Deadline:</label>
       <input type="date" th:field="*{deadline}" placeholder="Insert deadline"><br/><br/>
-    </label>
+    </p>
+
     <input type="hidden" th:field="*{projectId}">
     <input type="hidden" th:field="*{id}">
 
 
-    <button type="submit">Submit</button>
-    <button type="reset">reset</button>
+    <p><button class="default-button centered" type="submit">Submit</button></p>
+    <p><button class="default-button centered" type="reset">reset</button></p>
   </form>
 </div>
+<div th:insert="~{fragments/header-footer.html :: footer}"></div>
 </body>
 </html>
