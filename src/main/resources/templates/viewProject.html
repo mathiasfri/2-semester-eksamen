@@ -47,15 +47,16 @@
                                 <p th:text="${task.getTitle()}"></p>
                                 <p th:text="'Deadline: '+ ${task.getDeadline()}"></p>
                                 <p th:text="'Time spent: ' + ${task.getTimeSpent()}"></p>
-<!--                                <a th:href="" class="card-link">Delete task</a>-->
                                 <a th:href="@{'/projectCalculator/updatetask/'+ ${task.getId()}}"
-                                   class="btn btn-primary btn-lg btn-block">
-                                    <button type="button" class="btn btn-primary btn-lg btn-block">Update</button>
-                                </a>
-                                <form th:action="@{'/projectCalculator/deletetask/' + ${task.getId()}}" method="post">
+                                   class="card-link">Update</a>
+                                <a th:href="@{'/projectCalculator/deletetask/' + ${task.getId()}}" class="card-link"
+                                   onclick="return confirm('Are you sure you want to delete this task?')">Delete task</a>
+
+<!--                                <form th:action="@{'/projectCalculator/deletetask/' + ${task.getId()}}" method="post">
                                     <input type="hidden" name="_method" value="delete">
                                     <button type="submit" onclick="return confirm('Are you sure you want to delete this task?')" class="btn btn-danger">Delete</button>
-                                </form>
+                                </form>-->
+
                                 <form th:action="@{'/projectCalculator/assignusertotask/' + ${task.getId()}}" method="post">
                                     <label for="email">Assign User to task:</label>
                                     <input type="text" id="mails" name="email" required>
@@ -69,20 +70,23 @@
                     </a>
                 </div>
                 <a th:href="@{'/projectCalculator/deletesubproject/'+ ${sl.getProjectId()} + '/' + ${sl.getId()}}"
-                        type="button" class="delete-button" aria-label="Delete">X</a>
-                    <a th:href="@{'/projectCalculator/createtask/' + ${sl.getId()}}" class="card-link">Create Task</a>
+                        type="button" class="delete-button" aria-label="Delete"
+                   onclick="return confirm('Are you sure you want to delete this sub-project?')">X</a>
+
+                <a th:href="@{'/projectCalculator/createtask/' + ${sl.getId()}}" class="card-link">Create Task</a>
+
                     <form th:action="@{'/projectCalculator/deletesubproject/' + ${sl.getId()}}" method="post">
                         <input type="hidden" name="_method" value="delete">
-                        <button type="submit" onclick="return confirm('Are you sure you want to delete this sub-project?')" class="btn btn-primary btn-lg btn-block">Delete Sub-Project</button>
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this sub-project?')"
+                                class="btn btn-primary btn-lg btn-block">Delete Sub-Project</button>
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
-
 
     <div>
         <form th:action="@{'/projectCalculator/assignuser/' + ${projectID}}" method="post">
-            <label class="centered bottom" for="email">Assign User:</label>
+            <label class="centered bottom" for="email">Assign user to project:</label>
             <input class="bottom" type="text" id="email" name="email" required placeholder="input email of other user">
         </form>
     </div>
