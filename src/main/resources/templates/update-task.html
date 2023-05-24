@@ -3,32 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <title>Update Task</title>
-
+  <link rel="stylesheet" th:href="@{/header-footer.css}">
 </head>
 <body>
-<h1>Update Task</h1>
+<div th:insert="~{fragments/header-footer.html :: header}"></div>
+<h1>Update Project</h1>
 <div>
   <form th:action="@{/projectCalculator/updatetask}" th:object="${updateTask}" method="post">
-    <label>
+    <p>
+      <label class="centered">Title:</label>
       <input type="text" th:field="*{title}" placeholder="insert title"><br/><br/>
-    </label>
+    </p>
 
-    <label>
-      <input type="date" th:field="*{deadline}" placeholder="Insert deadline"required><br/><br/>
-    </label>
-    <label>
+    <p>
+      <label class="centered">Deadline:</label>
+      <input type="date" th:field="*{deadline}" placeholder="Insert deadline"><br/><br/>
+    </p>
+
+    <p>
+      <label class="centered">Time spent (in hours):</label>
       <input type="number" th:field="*{timeSpent}" placeholder="Insert time spent"><br/><br/>
-    </label>
+    </p>
 
     <input type="hidden" th:field="*{subId}">
     <input type="hidden" th:field="*{id}">
 
+
+    <p><button class="default-button centered" type="submit">Submit</button></p>
+    <p><button class="default-button centered" type="reset">reset</button></p>
     <div th:if="${updatedDeadLineError}" class="error-message">
       Task deadline cannot exceed the subproject deadline.
     </div>
-    <button type="submit">Submit</button>
-    <button type="reset">reset</button>
   </form>
 </div>
+<div th:insert="~{fragments/header-footer.html :: footer}"></div>
 </body>
 </html>

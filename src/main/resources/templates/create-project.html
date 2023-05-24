@@ -1,37 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Create a Project</title>
-  <link rel="stylesheet" th:href="@{/main.css}">
+    <meta charset="UTF-8">
+    <title>Create a Project</title>
+    <link rel="stylesheet" th:href="@{/header-footer.css}">
+    <link rel="stylesheet" th:href="@{/main.css}">
 </head>
 <body>
-<h1 class="centered">Create a Project</h1>
+<div th:insert="~{fragments/header-footer.html :: header}"></div>
+<br>
+<h1>Create a Project</h1>
 <div>
-  <form th:action="@{/projectCalculator/addproject}" th:object="${newProject}" method="post">
-    <label>
-      <input type="text" th:field="*{title}" placeholder="type title"><br/><br/>
-    </label>
+    <form th:action="@{/projectCalculator/addproject}" th:object="${newProject}" method="post">
+      <p>
+        <label class="centered">Title:</label>
+        <input type="text" th:field="*{title}" placeholder="type title">
+      </p>
 
-    <label>
-      <input type="date" th:field="*{deadline}" placeholder="type date"><br/><br/>
-    </label>
+      <p>
+        <label class="centered">Deadline:</label>
+        <input id="deadline" type="date" th:field="*{deadline}" placeholder="type date">
+      </p>
 
-    <label>
-      <input type="number" th:field="*{budget}" placeholder="insert budget"><br/><br/>
-    </label>
-    <label>
-      <input type="number" th:field="*{timeSpent}" placeholder="insert timeSpent"><br/><br/>
-    </label>
-    <label>
-      <input type="text" th:field="*{description}" placeholder="type description"><br/><br/>
-    </label>
+      <p>
+        <label class="centered">Budget (in DKK):</label>
+        <input id="budget" type="number" th:field="*{budget}" placeholder="insert budget">
+      </p>
 
-    <input type="hidden" th:field="*{userId}">
+      <p>
+        <label class="centered">Description:</label>
+        <input id="description" type="text" th:field="*{description}" placeholder="type description">
+      </p>
 
-    <button type="submit">Submit</button>
-    <button type="reset">Reset</button>
-  </form>
+        <input type="hidden" th:field="*{userId}">
+        <p>
+          <button class="default-button centered" type="submit">Submit</button>
+        </p>
+
+        <p>
+          <button class="default-button centered" type="reset">Reset</button>
+        </p>
+    </form>
 </div>
+<div th:insert="~{fragments/header-footer.html :: footer}"></div>
 </body>
 </html>

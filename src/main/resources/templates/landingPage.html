@@ -6,6 +6,7 @@
     <link th:href="@{/main.css}" rel="stylesheet"/>
 </head>
 <body>
+<div th:include="fragments/header-footer.html :: header"></div>
 <div>
     <div>
         <h1 class="centered">Welcome to your personal Project Manager</h1>
@@ -15,5 +16,6 @@
         <a th:href="@{/projectCalculator/login}">Login</a><p> or </p><a th:href="@{/projectCalculator/create}">Sign up</a>
     </div>
 </div>
+<div th:insert="~{fragments/header-footer.html :: footer}"></div>
 </body>
 </html>

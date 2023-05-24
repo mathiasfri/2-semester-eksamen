@@ -4,22 +4,27 @@
   <meta charset="UTF-8">
   <title>Sign Up</title>
   <link rel="stylesheet" th:href="@{/main.css}">
+  <link rel="stylesheet" th:href="@{/header-footer.css}">
 </head>
 <body>
+<div th:insert="~{fragments/header-footer.html :: header}"></div>
 <h1 class="centered">Create user account!</h1>
 <div>
   <form th:action="@{/projectCalculator/adduser}" th:object="${newUser}" method="post">
-    <label>
+    <p>
+      <label class="centered">E-mail:</label>
       <input type="email" th:field="*{email}" placeholder="type email">
-    </label>
+    </p>
 
-    <label>
+    <p>
+      <label class="centered">Password:</label>
       <input type="password" th:field="*{password}" placeholder="type password">
-    </label>
+    </p>
 
-    <button type="submit">Submit</button>
-    <button type="reset">reset</button>
+    <p><button class="default-button centered" type="submit">Submit</button></p>
+    <p><button class="default-button centered" type="reset">reset</button></p>
   </form>
 </div>
+<div th:insert="~{fragments/header-footer.html :: footer}"></div>
 </body>
 </html>

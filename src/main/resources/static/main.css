@@ -1,31 +1,47 @@
-
-h1 {
+h1, h2, h3, h4, h5, h6{
     color: darkblue;
     font-family: Arial, serif;
+    margin: auto;
+    font-weight: bold;
+    text-align: center;
 }
 
 label {
     font-size: large;
     font-family: Arial, serif;
+    color: darkblue;
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    justify-content: center;
+    align-items: center;
 }
 
 input {
-    margin: auto;
-    display: flex;
     justify-content: center;
     align-items: center;
+    display: block;
+    margin: auto auto 10px;
     width: 30%;
     border: 1px solid #ccc;
     padding: 4px;
 }
 
-button {
-    margin: auto;
+.default-button {
+    margin: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 15%;
-    height: 7%;
+    width: 20%;
+    height:20%;
+    background: darkblue;
+    color: white;
+    padding: 5px;
+}
+
+div {
+    display: block;
+    /*margin-bottom: 10px; optional */
 }
 
 .centered {
@@ -33,8 +49,31 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 99%;
+    text-align: center;
     border: 2px;
     padding: 5px;
 }
 
+main {
+    padding: 10px;
+    margin: 10px;
+}
+
+.bottom{
+    bottom: 0;
+}
+
+.card {
+    position: relative;
+}
+
+.delete-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px;
+    background-color: transparent;
+    border: none;
+    color: black;
+    cursor: pointer;
+}
