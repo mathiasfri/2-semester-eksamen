@@ -71,9 +71,10 @@ main {
     position: absolute;
     top: 0;
     right: 0;
-    padding: 5px;
-    background-color: transparent;
-    border: none;
-    color: black;
-    cursor: pointer;
+}
+
+.edit-button {
+    position: absolute;
+    top: 5px;
+    left: 5px;
 }
