@@ -45,7 +45,7 @@ public class LoginController {
             session.setAttribute("user", user);
             current_userId = user.getUserId();
 
-            session.setMaxInactiveInterval(30);
+            session.setMaxInactiveInterval(3600);
 
             return "redirect:/projectCalculator/mainPage/" + current_userId;
         }
