@@ -66,6 +66,8 @@ public class mainPageController {
     @GetMapping("/assignedprojects/{uid}")
     public String getAssignedProjects(@PathVariable int uid, Model model) {
         List<Project> assignedProjects = projectRepository.getAssignedProjects(uid);
+        User loggedInUser = userRepository.getUser(uid);
+        model.addAttribute("userId", loggedInUser.getUserId());
         model.addAttribute("assignedProjects", assignedProjects);
         return "assignedProjects";
     }
