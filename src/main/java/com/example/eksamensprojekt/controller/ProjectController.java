@@ -5,7 +5,6 @@ import com.example.eksamensprojekt.models.SubProject;
 import com.example.eksamensprojekt.models.Tasks;
 import com.example.eksamensprojekt.models.User;
 import com.example.eksamensprojekt.repository.*;
-import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -55,7 +54,7 @@ public class ProjectController {
         // Check if the logged-in user has access to the project
         if (project.getUserId() != loggedInUser.getUserId()) {
             // Handle unauthorized access, e.g., redirect to an error page
-            return "error";
+            return "noaccess";
         }
 
         String projectTitle = project.getTitle();
