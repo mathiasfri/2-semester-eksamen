@@ -25,7 +25,7 @@
             <p>No projects made... Create a project!</p>
         </div>
         <div th:unless="${projectList.isEmpty()}" th:each="pl : ${projectList}" class="sub-project-card">
-            <a th:href="@{'/projectCalculator/project/' + ${pl.getId()}}"
+            <a th:href="@{'/projectCalculator/project/' + ${pl.getId()} + '?userId=' + ${userId}}"
                class="card-link" style="text-decoration: none; color: black">
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
