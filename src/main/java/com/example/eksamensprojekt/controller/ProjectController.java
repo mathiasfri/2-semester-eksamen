@@ -59,7 +59,7 @@ public class ProjectController {
 
         List<Integer> listOfAssignedUsersToProject = projectUserRepository.checkIfAssignedToProject(pid);
         for (Integer i : listOfAssignedUsersToProject){
-            if (i.equals(loggedInUser.getUserId())){
+            if (i.equals(loggedInUser.getUserId()) || project.getUserId() == loggedInUser.getUserId()){
                 return "viewProject";
             }
             else{
@@ -67,11 +67,6 @@ public class ProjectController {
             }
         }
 
-        // Check if the logged-in user has access to the project
-        if (project.getUserId() == loggedInUser.getUserId()) {
-            // Handle unauthorized access, e.g., redirect to an error page
-            return "viewProject";
-        }
 
         model.addAttribute("userId", loggedInUser.getUserId());
         String projectTitle = project.getTitle();
