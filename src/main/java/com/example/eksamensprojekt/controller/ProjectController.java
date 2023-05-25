@@ -26,8 +26,8 @@ public class ProjectController {
     private UserRepository userRepository;
 
     public ProjectController(ProjectRepository projectRepository, SubProjectRepository subProjectRepository,
-    ProjectUserRepository projectUserRepository, TasksRepository tasksRepository, SubProjectUserRepository subProjectUserRepository
-    , UserRepository userRepository, TasksUserRepository tasksUserRepository) {
+                             ProjectUserRepository projectUserRepository, TasksRepository tasksRepository, SubProjectUserRepository subProjectUserRepository
+            , UserRepository userRepository, TasksUserRepository tasksUserRepository) {
         this.projectRepository = projectRepository;
         this.subProjectRepository = subProjectRepository;
         this.projectUserRepository = projectUserRepository;
