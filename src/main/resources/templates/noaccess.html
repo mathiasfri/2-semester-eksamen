@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>u being a fuckboi, go back</title>
+    <link rel="stylesheet" th:href="@{/header-footer.css}">
 </head>
 <body>
-
+<div th:insert="~{fragments/header-footer.html :: header}"></div>
+<h1 style="font-size: 100px; margin-top: 50px">Something went wrong. Please go back and try again :)</h1>
+<div th:insert="~{fragments/header-footer.html :: footer}"></div>
 </body>
 </html>

@@ -4,16 +4,14 @@
     <meta charset="UTF-8">
     <title>Project Calculator</title>
     <link th:href="@{/main.css}" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/header-footer.css}">
 </head>
 <body>
-<div th:include="fragments/header-footer.html :: header"></div>
-<div>
+<div th:insert="fragments/header-footer.html :: header"></div>
+<div style="margin-top: 50px">
     <div>
-        <h1 class="centered">Welcome to your personal Project Manager</h1>
-        <h5 class="centered">Made by Osama Mansour & Mathias Fridthjof</h5>
-    </div>
-    <div>
-        <a th:href="@{/projectCalculator/login}">Login</a><p> or </p><a th:href="@{/projectCalculator/create}">Sign up</a>
+        <h1 class="centered" style="font-size: 100px">Welcome to your personal Project Manager</h1>
+        <h5 class="centered" style="font-size: 25px">Made by Osama Mansour & Mathias Fridthjof</h5>
     </div>
 </div>
 <div th:insert="~{fragments/header-footer.html :: footer}"></div>
