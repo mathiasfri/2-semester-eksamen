@@ -97,11 +97,6 @@ public class ProjectController {
                 return "noaccess";
             }
         }
-
-
-
-
-
         return "viewProject";
     }
 
