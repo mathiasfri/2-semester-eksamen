@@ -60,6 +60,37 @@ public class ProjectController {
         List<Integer> listOfAssignedUsersToProject = projectUserRepository.checkIfAssignedToProject(pid);
         for (Integer i : listOfAssignedUsersToProject){
             if (i.equals(loggedInUser.getUserId()) || project.getUserId() == loggedInUser.getUserId()){
+                model.addAttribute("userId", loggedInUser.getUserId());
+                String projectTitle = project.getTitle();
+                model.addAttribute("projectTitle", projectTitle);
+
+                String projectDescription = project.getDescription();
+                model.addAttribute("projectDescription", projectDescription);
+
+                model.addAttribute("projectID", pid);
+
+                List<SubProject> subProjects = subProjectRepository.getSubProjects(pid);
+                model.addAttribute("subProjects", subProjects);
+
+                Map<Integer, Boolean> assignedSubStatusMap = new HashMap<>();
+                List<Tasks> tasks = new ArrayList<>();
+
+                for (SubProject s : subProjects) {
+                    tasks = tasksRepository.getTaskList(s.getId());
+                    s.setTasks(tasks);
+
+                    boolean isAssignedToSub = subProjectUserRepository.isAssignedToSubproject(loggedInUser.getUserId(), s.getId());
+                    assignedSubStatusMap.put(s.getId(), isAssignedToSub);
+                }
+                model.addAttribute("assignedSubStatusMap", assignedSubStatusMap);
+
+
+                Map<Integer, Boolean> assignedTaskStatusMap = new HashMap<>();
+                for (Tasks t : tasks){
+                    boolean isAssignedToTask = tasksUserRepository.isAssignedToTask(loggedInUser.getUserId(), t.getId());
+                    assignedTaskStatusMap.put(t.getId(), isAssignedToTask);
+                }
+                model.addAttribute("assignedTaskStatusMap", assignedTaskStatusMap);
                 return "viewProject";
             }
             else{
@@ -68,37 +99,7 @@ public class ProjectController {
         }
 
 
-        model.addAttribute("userId", loggedInUser.getUserId());
-        String projectTitle = project.getTitle();
-        model.addAttribute("projectTitle", projectTitle);
 
-        String projectDescription = project.getDescription();
-        model.addAttribute("projectDescription", projectDescription);
-
-        model.addAttribute("projectID", pid);
-
-        List<SubProject> subProjects = subProjectRepository.getSubProjects(pid);
-        model.addAttribute("subProjects", subProjects);
-
-        Map<Integer, Boolean> assignedSubStatusMap = new HashMap<>();
-        List<Tasks> tasks = new ArrayList<>();
-
-        for (SubProject s : subProjects) {
-            tasks = tasksRepository.getTaskList(s.getId());
-            s.setTasks(tasks);
-
-            boolean isAssignedToSub = subProjectUserRepository.isAssignedToSubproject(loggedInUser.getUserId(), s.getId());
-            assignedSubStatusMap.put(s.getId(), isAssignedToSub);
-        }
-        model.addAttribute("assignedSubStatusMap", assignedSubStatusMap);
-
-
-        Map<Integer, Boolean> assignedTaskStatusMap = new HashMap<>();
-        for (Tasks t : tasks){
-            boolean isAssignedToTask = tasksUserRepository.isAssignedToTask(loggedInUser.getUserId(), t.getId());
-            assignedTaskStatusMap.put(t.getId(), isAssignedToTask);
-        }
-        model.addAttribute("assignedTaskStatusMap", assignedTaskStatusMap);
 
 
         return "viewProject";
