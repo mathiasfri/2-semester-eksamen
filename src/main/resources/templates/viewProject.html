@@ -54,10 +54,12 @@
                             <a th:href="@{'/projectCalculator/updatetask/'+ ${task.getId()}}"
                                class="btn btn-link edit-button"><i class="fas fa-wrench"></i></a>
                             <form th:action="@{'/projectCalculator/deletetask/' + ${task.getId()}}" method="post">
+                                <input type="hidden" name="tid" th:value="${task.getId()}">
                                 <input type="hidden" name="_method" value="delete">
                                 <button type="submit" onclick="return confirm('Are you sure you want to delete this task?')"
                                         class="btn btn-link delete-button"><i class="fas fa-trash-alt" style="color: #ff0f0f;"></i></button>
                             </form>
+
                         </div>
                     </div>
 
