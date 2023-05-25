@@ -10,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("projectCalculator")
 @Controller
@@ -19,18 +21,20 @@ public class ProjectController {
     private SubProjectRepository subProjectRepository;
     private ProjectUserRepository projectUserRepository;
     private TasksRepository tasksRepository;
+    private TasksUserRepository tasksUserRepository;
     private SubProjectUserRepository subProjectUserRepository;
     private UserRepository userRepository;
 
     public ProjectController(ProjectRepository projectRepository, SubProjectRepository subProjectRepository,
     ProjectUserRepository projectUserRepository, TasksRepository tasksRepository, SubProjectUserRepository subProjectUserRepository
-    , UserRepository userRepository) {
+    , UserRepository userRepository, TasksUserRepository tasksUserRepository) {
         this.projectRepository = projectRepository;
         this.subProjectRepository = subProjectRepository;
         this.projectUserRepository = projectUserRepository;
         this.tasksRepository = tasksRepository;
         this.subProjectUserRepository = subProjectUserRepository;
         this.userRepository = userRepository;
+        this.tasksUserRepository = tasksUserRepository;
     }
     @GetMapping("/createproject/{uid}")
     public String createProject(@PathVariable int uid, Model model){
@@ -70,10 +74,26 @@ public class ProjectController {
         List<SubProject> subProjects = subProjectRepository.getSubProjects(pid);
         model.addAttribute("subProjects", subProjects);
 
+        Map<Integer, Boolean> assignedSubStatusMap = new HashMap<>();
+        List<Tasks> tasks = new ArrayList<>();
+
         for (SubProject s : subProjects) {
-            List<Tasks> tasks = tasksRepository.getTaskList(s.getId());
+            tasks = tasksRepository.getTaskList(s.getId());
             s.setTasks(tasks);
+
+            boolean isAssignedToSub = subProjectUserRepository.isAssignedToSubproject(loggedInUser.getUserId(), s.getId());
+            assignedSubStatusMap.put(s.getId(), isAssignedToSub);
         }
+        model.addAttribute("assignedSubStatusMap", assignedSubStatusMap);
+
+
+        Map<Integer, Boolean> assignedTaskStatusMap = new HashMap<>();
+        for (Tasks t : tasks){
+            boolean isAssignedToTask = tasksUserRepository.isAssignedToTask(loggedInUser.getUserId(), t.getId());
+            assignedTaskStatusMap.put(t.getId(), isAssignedToTask);
+        }
+        model.addAttribute("assignedTaskStatusMap", assignedTaskStatusMap);
+
 
         return "viewProject";
     }

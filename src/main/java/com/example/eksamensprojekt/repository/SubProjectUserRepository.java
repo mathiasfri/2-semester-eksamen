@@ -59,6 +59,23 @@ public class SubProjectUserRepository {
         }
     }
 
+    public boolean isAssignedToSubproject(int userID, int subID){
+        try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)){
+            String SQL = "SELECT * FROM subproject_user WHERE user_id = ? AND sub_id = ?";
+            PreparedStatement pstm = con.prepareStatement(SQL);
+            pstm.setInt(1, userID);
+            pstm.setInt(2, subID);
+            ResultSet rs = pstm.executeQuery();
+
+            return rs.next();
+
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 
 }
 

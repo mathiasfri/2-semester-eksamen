@@ -78,3 +78,7 @@ main {
     top: 5px;
     left: 5px;
 }
+
+.assigned {
+    background-color: yellow;
+}

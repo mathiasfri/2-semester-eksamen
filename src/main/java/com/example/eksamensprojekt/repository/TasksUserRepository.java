@@ -57,4 +57,20 @@ public class TasksUserRepository {
         }
     }
 
+    public boolean isAssignedToTask(int userID, int taskID){
+        try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)){
+            String SQL = "SELECT * FROM tasks_user WHERE user_id = ? AND task_id = ?";
+            PreparedStatement pstm = con.prepareStatement(SQL);
+            pstm.setInt(1, userID);
+            pstm.setInt(2, taskID);
+            ResultSet rs = pstm.executeQuery();
+
+            return rs.next();
+
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
