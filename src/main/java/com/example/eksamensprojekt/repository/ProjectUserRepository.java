@@ -1,11 +1,13 @@
 package com.example.eksamensprojekt.repository;
 
 import com.example.eksamensprojekt.models.Project;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 @Repository
 public class ProjectUserRepository {
@@ -44,6 +46,26 @@ public class ProjectUserRepository {
             throw new RuntimeException(e);
         }
         return -1;
+    }
+
+    public List<Integer> checkIfAssignedToProject(int projectID){
+        List<Integer> listOfAssignedUsers = new ArrayList<>();
+        try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)) {
+            String SQL = "SELECT * FROM project_user WHERE project_id = ?";
+            PreparedStatement pstmt = con.prepareStatement(SQL);
+            pstmt.setInt(1, projectID);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int userID = rs.getInt("user_id");
+
+                listOfAssignedUsers.add(userID);
+            }
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listOfAssignedUsers;
     }
 }
 
