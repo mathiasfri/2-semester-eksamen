@@ -11,7 +11,8 @@
 <br>
 <h1>Create a Project</h1>
 <div>
-    <form th:action="@{/projectCalculator/addproject}" th:object="${newProject}" method="post">
+    <form th:action="@{/projectCalculator/addproject}" th:object="${newProject}"
+          method="post" style="margin-top: 60px">
       <p>
         <label class="centered">Title:</label>
         <input type="text" th:field="*{title}" placeholder="type title">
@@ -33,12 +34,12 @@
       </p>
 
         <input type="hidden" th:field="*{userId}">
-        <p>
-          <button class="default-button centered" type="submit">Submit</button>
+        <p class="centered">
+          <button class="default-button" type="submit">Submit</button>
         </p>
 
-        <p>
-          <button class="default-button centered" type="reset">Reset</button>
+        <p class="centered">
+          <button class="default-button" type="reset">Reset</button>
         </p>
     </form>
 </div>

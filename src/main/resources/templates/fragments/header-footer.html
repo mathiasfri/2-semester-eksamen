@@ -10,12 +10,11 @@
     <nav>
         <div class="header-container">
             <ul class="header-left">
-                <li><a th:href="@{'/projectCalculator/mainPage/' + ${userId}}">Main Page</a></li>
+                <li><a th:href="@{/projectCalculator/create}">Create User</a></li>
             </ul>
             <ul class="header-center">
                 <li><a th:href="@{'/projectCalculator/assignedprojects/' + ${userId}}">Assigned Projects</a></li>
-                <li><a th:href="@{'/projectCalculator/assignedsubprojects/' + ${userId}}">Assigned SubProjects</a></li>
-                <li><a th:href="@{'/projectCalculator/assignedtasks/' + ${userId}}">Assigned Tasks</a></li>
+                <li><a th:href="@{'/projectCalculator/mainPage/' + ${userId}}">Main Page</a></li>
             </ul>
 
             <ul class="header-right">

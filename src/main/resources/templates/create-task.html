@@ -10,7 +10,7 @@
 <div th:insert="~{fragments/header-footer.html :: header}"></div>
 <h1 class="centered">Create a task</h1>
 <div>
-  <form th:action="@{/projectCalculator/addtask}" th:object="${newTask}" method="post">
+  <form th:action="@{/projectCalculator/addtask}" th:object="${newTask}" method="post" style="margin-top: 60px">
     <p>
       <label class="centered">Title:</label>
       <input type="text" th:field="*{title}" placeholder="type title"><br/><br/>
@@ -28,8 +28,8 @@
 
     <input type="hidden" th:field="*{subId}">
 
-    <p><button class="default-button centered" type="submit">Submit</button></p>
-    <p><button class="default-button centered" type="reset">Reset</button></p>
+    <p class="centered"><button class="default-button" type="submit">Submit</button></p>
+    <p class="centered"><button class="default-button" type="reset">Reset</button></p>
     <div th:if="${deadlineError}" class="error-message">
       Task deadline cannot exceed the subproject deadline.
     </div>

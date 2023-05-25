@@ -4,10 +4,12 @@
   <meta charset="UTF-8">
   <title>Sessions</title>
   <link rel="stylesheet" th:href="@{/main.css}">
+  <link rel="stylesheet" th:href="@{/header-footer.css}">
 </head>
 <body>
+<div th:insert="~{fragments/header-footer.html :: header}"></div>
 <h1 class="centered">Login</h1>
-<form action="/projectCalculator/login" method="post">
+<form action="/projectCalculator/login" method="post" style="margin-top: 150px">
   <p th:if="${wrongCredentials}" class="centered">Forkert brugerid eller password</p>
 
   <p><label class="centered">Email:</label>
@@ -16,8 +18,9 @@
   <p><label class="centered">Password:</label>
     <input name="pw" type="password" placeholder="input password"></p>
   <p>
-    <button class="centered" type="submit">Login</button>
+    <button class="default-button centered" type="submit">Login</button>
   </p>
 </form>
+<div th:insert="~{fragments/header-footer.html :: footer}"></div>
 </body>
 </html>
