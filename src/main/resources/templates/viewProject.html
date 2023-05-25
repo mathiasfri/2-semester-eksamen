@@ -22,9 +22,10 @@
 
 
     <div class="sub-projects-container">
-        <div th:if="${subProjects.isEmpty()}">
+        <div th:if="${subProjects == null or subProjects.isEmpty()}">
             <p class="centered">No sub-projects made... Create a sub-project!</p>
         </div>
+
         <div th:unless="${subProjects.isEmpty()}" th:each="sl : ${subProjects}" class="sub-project-card">
             <div class="card" style="width: 18rem;" th:classappend="${assignedSubStatusMap.get(sl.getId()) ? 'assigned' : ''}">
                 <div class="card-body">

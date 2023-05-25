@@ -54,13 +54,12 @@ public class ProjectController {
     @GetMapping("/project/{pid}")
     public String projectView(@PathVariable int pid, @RequestParam("userId") int userId, Model model) {
         User loggedInUser = userRepository.getUser(userId);
-
         Project project = projectRepository.getSpecificProject(pid);
+        model.addAttribute("userId", loggedInUser.getUserId());
 
         List<Integer> listOfAssignedUsersToProject = projectUserRepository.checkIfAssignedToProject(pid);
         for (Integer i : listOfAssignedUsersToProject){
             if (i.equals(loggedInUser.getUserId()) || project.getUserId() == loggedInUser.getUserId()){
-                model.addAttribute("userId", loggedInUser.getUserId());
                 String projectTitle = project.getTitle();
                 model.addAttribute("projectTitle", projectTitle);
 
