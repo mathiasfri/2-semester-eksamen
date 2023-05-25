@@ -148,15 +148,10 @@ public class ProjectController {
         projectRepository.updateProject(projectUpdate);
         return "redirect:/projectCalculator/mainPage/" + projectUpdate.getUserId();
     }
-    @RequestMapping(value = "/deleteproject/{pid}", method = RequestMethod.DELETE)
+
+    @DeleteMapping("/deleteproject/{pid}")
     public String deleteProject(@PathVariable int pid, @ModelAttribute Project projectDelete) {
         projectRepository.deleteProject(pid);
         return "redirect:/projectCalculator/mainPage/" + projectDelete.getUserId();
     }
-
-/*    @DeleteMapping("/deleteproject/{pid}")
-    public String deleteProject(@PathVariable int pid, @ModelAttribute Project projectDelete) {
-        projectRepository.deleteProject(pid);
-        return "redirect:/projectCalculator/mainPage/" + projectDelete.getUserId();
-    }*/
 }
