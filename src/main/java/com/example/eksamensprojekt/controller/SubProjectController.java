@@ -102,7 +102,7 @@ public class SubProjectController {
 
         return "redirect:/projectCalculator/mainPage/" + subId;
     }
-    @DeleteMapping("/deletesubproject/{pid}")
+    @PostMapping("/deletesubproject/{pid}")
     public String deleteProject(@PathVariable int pid) {
         SubProject subProjectDelete = subProjectRepository.getSpecificSubProject(pid);
         int projectId = subProjectDelete.getProjectId();

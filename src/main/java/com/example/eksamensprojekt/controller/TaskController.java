@@ -128,7 +128,7 @@ public class TaskController {
 
         return "redirect:/projectCalculator/mainPage/" + taskId;
     }
-    @DeleteMapping("/deletetask/{tid}")
+    @PostMapping("/deletetask/{tid}")
     public String deleteTask(@PathVariable int tid, @ModelAttribute Tasks taskDelete) {
         Tasks deletedTask = tasksRepository.getSpecificTask(tid);
         int subId = deletedTask.getSubId();
