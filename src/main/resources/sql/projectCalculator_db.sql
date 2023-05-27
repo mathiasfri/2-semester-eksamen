@@ -49,7 +49,6 @@ CREATE TABLE subProject
     deadline    DATE,
     time_spent  DOUBLE,
     project_id  INTEGER,
-    user_id     INTEGER,
     PRIMARY KEY (id),
     FOREIGN KEY (project_id) REFERENCES project (id) ON DELETE CASCADE
 );
