@@ -1,11 +1,8 @@
 package com.example.eksamensprojekt.repository;
-
-import com.example.eksamensprojekt.models.SubProject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository

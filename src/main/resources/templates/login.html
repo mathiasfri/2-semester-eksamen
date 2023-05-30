@@ -11,7 +11,7 @@
 <h1 class="centered">Login</h1>
 <form action="/projectCalculator/login" method="post" style="margin-top: 150px">
   <p th:if="${wrongCredentials}" class="centered">Forkert brugerid eller password</p>
-
+  <p th:if="${noUserFound}" class="centered">E-mail not found, you have not signed up yet.</p>
   <p><label class="centered">Email:</label>
     <input name="uid" type="text" autofocus placeholder="input email"></p>
 

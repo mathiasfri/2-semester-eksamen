@@ -1,12 +1,10 @@
 package com.example.eksamensprojekt.repository;
 
-import com.example.eksamensprojekt.models.Project;
-import jakarta.persistence.criteria.CriteriaBuilder;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 @Repository

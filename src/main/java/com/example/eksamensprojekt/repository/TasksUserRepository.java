@@ -16,19 +16,6 @@ public class TasksUserRepository {
     String user_id;
     @Value("${spring.datasource.password}")
     String user_pwd;
-    public void assignUsersToTaska(int taskId, List<Integer> userIds) {
-        try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)) {
-            String SQL = "INSERT INTO tasks_user(task_id, user_id) VALUES(?, ?)";
-            PreparedStatement pstmt = con.prepareStatement(SQL);
-            for (int userId : userIds) {
-                pstmt.setInt(1, taskId);
-                pstmt.setInt(2, userId);
-                pstmt.executeUpdate();
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
     public void assignUsersToTask(int taskId, List<Integer> userIds) {
         try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)) {
             String selectQuery = "SELECT COUNT(*) FROM tasks_user WHERE task_id = ? AND user_id = ?";

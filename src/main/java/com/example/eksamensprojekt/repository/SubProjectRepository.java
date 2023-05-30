@@ -1,6 +1,4 @@
 package com.example.eksamensprojekt.repository;
-
-import com.example.eksamensprojekt.models.Project;
 import com.example.eksamensprojekt.models.SubProject;
 import com.example.eksamensprojekt.models.Tasks;
 import org.springframework.beans.factory.annotation.Value;

@@ -20,16 +20,13 @@ public class mainPageController {
     private ProjectRepository projectRepository;
     private SubProjectRepository subProjectRepository;
     private TasksRepository tasksRepository;
-    private TasksUserRepository tasksUserRepository;
     public mainPageController(UserRepository userRepository, LoginController loginController, ProjectRepository projectRepository,
-                              SubProjectRepository subProjectRepository, TasksRepository tasksRepository,
-                              TasksUserRepository tasksUserRepository) {
+                              SubProjectRepository subProjectRepository, TasksRepository tasksRepository) {
         this.userRepository = userRepository;
         this.loginController = loginController;
         this.projectRepository = projectRepository;
         this.subProjectRepository = subProjectRepository;
         this.tasksRepository = tasksRepository;
-        this.tasksUserRepository = tasksUserRepository;
     }
     @GetMapping("/create")
     public String createUser(Model model){
