@@ -10,7 +10,9 @@
 <div th:insert="~{fragments/header-footer.html :: header}"></div>
 <h1 class="centered">Something went wrong!</h1>
 <h3 class="centered">You might have pressed something you were not allowed to.</h3>
-<button class="default-button" th:href="@{/projectCalculator/login}">Try loggin in (again)</button>
+<a th:href="@{/projectCalculator/login}">
+  <button type="button" class="default-button">Try loggin in (again)</button>
+</a>
 <br>
 <button class="default-button" onclick="go.back()">Go back</button>
 <div th:insert="~{fragments/header-footer.html :: footer}"></div>
