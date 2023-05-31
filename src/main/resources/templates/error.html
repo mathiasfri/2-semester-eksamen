@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Error Page</title>
+    <link rel="stylesheet" th:href="@{/main.css}">
+    <link rel="stylesheet" th:href="@{/header-footer.css}">
+</head>
+<body>
+<div th:insert="~{fragments/header-footer.html :: header}"></div>
+<h1 class="centered">Something went wrong!</h1>
+<h3 class="centered">You might have pressed something you were not allowed to.</h3>
+<button class="default-button" th:href="@{/projectCalculator/login}">Try loggin in (again)</button>
+<br>
+<button class="default-button" onclick="go.back()">Go back</button>
+<div th:insert="~{fragments/header-footer.html :: footer}"></div>
+</body>
+</html>
