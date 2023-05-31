@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 @Repository
 public class ProjectUserRepository {
     @Value("${spring.datasource.url}")
@@ -46,7 +47,7 @@ public class ProjectUserRepository {
         return -1;
     }
 
-    public List<Integer> checkIfAssignedToProject(int projectID){
+    public List<Integer> checkIfAssignedToProject(int projectID) {
         List<Integer> listOfAssignedUsers = new ArrayList<>();
         try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)) {
             String SQL = "SELECT * FROM project_user WHERE project_id = ?";
@@ -59,8 +60,7 @@ public class ProjectUserRepository {
 
                 listOfAssignedUsers.add(userID);
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return listOfAssignedUsers;

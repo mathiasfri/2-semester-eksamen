@@ -68,26 +68,4 @@ public class mainPageController {
         model.addAttribute("assignedProjects", assignedProjects);
         return "assignedProjects";
     }
-    @GetMapping("/assignedsubprojects/{spid}")
-    public String getAssignedSubProjects(@PathVariable int spid, Model model) {
-        Project assignedProject = projectRepository.getSpecificProject(spid);
-        List<SubProject> assignedSubProjects = subProjectRepository.getAssignedSubProjects(spid);
-        model.addAttribute("assignedSubProjects", assignedSubProjects);
-        model.addAttribute("specificProject", assignedProject);
-        User user = userRepository.getUser(spid);
-        model.addAttribute("userId", user.getUserId());
-
-        return "assignedSubProjects";
-    }
-    @GetMapping("/assignedtasks/{tid}")
-    public String getAssignedTasks(@PathVariable int tid, Model model) {
-        List<Tasks> assignedTasks = tasksRepository.getAssignedTasks(tid);
-        model.addAttribute("pid", projectRepository.getSpecificProject(tid));
-        model.addAttribute("assignedTasks", assignedTasks);
-        User user = userRepository.getUser(tid);
-        model.addAttribute("userId", user.getUserId());
-        return "assignedTasks";
-    }
-
-
 }

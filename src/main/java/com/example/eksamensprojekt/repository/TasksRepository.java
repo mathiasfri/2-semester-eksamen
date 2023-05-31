@@ -1,4 +1,5 @@
 package com.example.eksamensprojekt.repository;
+
 import com.example.eksamensprojekt.models.Tasks;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -19,7 +20,7 @@ public class TasksRepository {
     String user_pwd;
 
     public void createTask(Tasks task) {
-        try(Connection con = DriverManager.getConnection(url,user_id,user_pwd)) {
+        try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)) {
             String SQL = "INSERT INTO tasks(title, deadline, time_spent, sub_id) VALUES(?, ?, ?, ?)";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setString(1, task.getTitle());
@@ -35,15 +36,16 @@ public class TasksRepository {
             throw new RuntimeException(e);
         }
     }
-    public List<Tasks> getTaskList(int sub_id){
+
+    public List<Tasks> getTaskList(int sub_id) {
         List<Tasks> taskList = new ArrayList<>();
-        try(Connection con = DriverManager.getConnection(url,user_id,user_pwd)) {
+        try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)) {
             String SQL = "SELECT * FROM tasks WHERE sub_id = ?";
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setInt(1, sub_id);
             ResultSet rs = pstmt.executeQuery();
 
-            while(rs.next()){
+            while (rs.next()) {
                 int taskId = rs.getInt("id");
                 String title = rs.getString("title");
                 java.sql.Date sqlDeadLine = rs.getDate("deadline");
@@ -53,7 +55,7 @@ public class TasksRepository {
                 double timeSpent = rs.getInt("time_spent");
                 int id = rs.getInt("sub_id");
 
-                taskList.add(new Tasks(taskId,title, deadline, timeSpent, id));
+                taskList.add(new Tasks(taskId, title, deadline, timeSpent, id));
             }
 
         } catch (SQLException e) {
@@ -61,16 +63,17 @@ public class TasksRepository {
         }
         return taskList;
     }
-    public Tasks getSpecificTask(int taskId){
+
+    public Tasks getSpecificTask(int taskId) {
         Tasks task = null;
 
-        try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)){
+        try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)) {
             String SQL = "SELECT * FROM tasks WHERE id = ?";
             PreparedStatement pstm = con.prepareStatement(SQL);
             pstm.setInt(1, taskId);
             ResultSet rs = pstm.executeQuery();
 
-            while (rs.next()){
+            while (rs.next()) {
                 String title = rs.getString("title");
                 java.sql.Date sqlDeadLine = rs.getDate("deadline");
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -81,17 +84,17 @@ public class TasksRepository {
 
                 task = new Tasks(taskId, title, deadline, timeSpent, subId);
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return task;
     }
-    public void updateTask(Tasks task){
-        try(Connection con = DriverManager.getConnection(url,user_id,user_pwd)) {
+
+    public void updateTask(Tasks task) {
+        try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)) {
             String SQL = "UPDATE tasks SET title=?, deadline=?, time_spent=? WHERE id = ?;";
             PreparedStatement pstmt = con.prepareStatement(SQL);
-            pstmt.setString(1,task.getTitle());
+            pstmt.setString(1, task.getTitle());
             LocalDate deadline = task.getDeadline();
             java.sql.Date sqlDeadline = java.sql.Date.valueOf(deadline);
             pstmt.setDate(2, sqlDeadline);
@@ -99,10 +102,11 @@ public class TasksRepository {
             pstmt.setInt(4, task.getId());
             pstmt.executeUpdate();
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
     public List<Tasks> getAssignedTasks(int userId) {
         List<Tasks> assignedTasks = new ArrayList<>();
         try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)) {
@@ -126,6 +130,7 @@ public class TasksRepository {
         }
         return assignedTasks;
     }
+
     public void deleteTask(int taskId) {
         try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)) {
             String SQL = "DELETE FROM tasks WHERE id = ?";

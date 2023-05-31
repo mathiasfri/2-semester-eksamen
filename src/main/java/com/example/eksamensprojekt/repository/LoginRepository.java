@@ -14,15 +14,16 @@ public class LoginRepository {
     String user_id;
     @Value("${spring.datasource.password}")
     String user_pwd;
-    public User checkEmail(String email){
+
+    public User checkEmail(String email) {
         User user = new User();
         try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)) {
             String SQL = "SELECT * FROM users WHERE email = ?";
             PreparedStatement pstmt = con.prepareStatement(SQL);
-            pstmt.setString(1,email);
+            pstmt.setString(1, email);
             ResultSet rs = pstmt.executeQuery();
 
-            if(rs.next()){
+            if (rs.next()) {
                 user.setUserId(rs.getInt("user_id"));
                 user.setPassword(rs.getString("password"));
             }

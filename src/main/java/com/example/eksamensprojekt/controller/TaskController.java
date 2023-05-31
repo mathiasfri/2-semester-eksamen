@@ -75,9 +75,6 @@ public class TaskController {
         return "redirect:/projectCalculator/mainPage/" + subId;
     }
 
-
-
-
     @GetMapping("/updatetask/{tid}")
     public String updateTask(@PathVariable int tid, Model model){
         Tasks updateTask = tasksRepository.getSpecificTask(tid);
@@ -86,7 +83,7 @@ public class TaskController {
         User user = userRepository.getUser(project.getUserId());
         model.addAttribute("userId", user.getUserId());
         model.addAttribute("updateTask", updateTask);
-        return"update-Task";
+        return"update-task";
     }
 
     @PostMapping("/updatetask")

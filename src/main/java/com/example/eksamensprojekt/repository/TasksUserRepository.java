@@ -16,6 +16,7 @@ public class TasksUserRepository {
     String user_id;
     @Value("${spring.datasource.password}")
     String user_pwd;
+
     public void assignUsersToTask(int taskId, List<Integer> userIds) {
         try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)) {
             String selectQuery = "SELECT COUNT(*) FROM tasks_user WHERE task_id = ? AND user_id = ?";
@@ -44,8 +45,8 @@ public class TasksUserRepository {
         }
     }
 
-    public boolean isAssignedToTask(int userID, int taskID){
-        try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)){
+    public boolean isAssignedToTask(int userID, int taskID) {
+        try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)) {
             String SQL = "SELECT * FROM tasks_user WHERE user_id = ? AND task_id = ?";
             PreparedStatement pstm = con.prepareStatement(SQL);
             pstm.setInt(1, userID);
@@ -54,8 +55,7 @@ public class TasksUserRepository {
 
             return rs.next();
 
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;

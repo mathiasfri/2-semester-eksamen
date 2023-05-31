@@ -30,8 +30,9 @@ public class SubProjectController {
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
     }
+
     @GetMapping("/createsubproject/{pid}")
-    public String createSubProject(@PathVariable int pid, Model model){
+    public String createSubProject(@PathVariable int pid, Model model) {
         SubProject newSubProject = new SubProject();
         newSubProject.setProjectId(pid);
 
@@ -41,14 +42,15 @@ public class SubProjectController {
         model.addAttribute("userId", user.getUserId());
         return "create-subproject";
     }
+
     @PostMapping("/addsubproject")
-    public String addSubProject(@ModelAttribute SubProject newSubProject, Model model){
+    public String addSubProject(@ModelAttribute SubProject newSubProject, Model model) {
         int projectId = newSubProject.getProjectId();
         Project project = projectRepository.getSpecificProject(projectId);
         // Method that doesn't allow user to type a date that exceeds project deadline.
         LocalDate projectDeadline = project.getDeadline();
         LocalDate subprojectDeadline = newSubProject.getDeadline();
-        if(subprojectDeadline.isAfter(projectDeadline)) {
+        if (subprojectDeadline.isAfter(projectDeadline)) {
             model.addAttribute("newSubProject", newSubProject);
             model.addAttribute("projectDeadline", projectDeadline);
             model.addAttribute("deadLineError", true);
@@ -61,24 +63,25 @@ public class SubProjectController {
         projectRepository.updateProject(project);
         return "redirect:/projectCalculator/mainPage/" + projectId;
     }
+
     @GetMapping("/updatesubproject/{sid}")
-    public String updateSubProject(@PathVariable int sid, Model model){
+    public String updateSubProject(@PathVariable int sid, Model model) {
         SubProject updateSubProject = subProjectRepository.getSpecificSubProject(sid);
         Project project = projectRepository.getSpecificProject(updateSubProject.getProjectId());
         User user = userRepository.getUser(project.getUserId());
         model.addAttribute("userId", user.getUserId());
         model.addAttribute("updateSubProject", updateSubProject);
-        return"update-subproject";
+        return "update-subproject";
     }
 
     @PostMapping("/updatesubproject")
-    public String updateUserSubProject(@ModelAttribute SubProject updateSubProject, Model model){
+    public String updateUserSubProject(@ModelAttribute SubProject updateSubProject, Model model) {
         // Method that doesn't allow user to type a date that exceeds project deadline.
         int projectId = updateSubProject.getProjectId();
         Project project = projectRepository.getSpecificProject(projectId);
         LocalDate updatedProjectDeadline = project.getDeadline();
         LocalDate subprojectDeadline = updateSubProject.getDeadline();
-        if(subprojectDeadline.isAfter(updatedProjectDeadline)) {
+        if (subprojectDeadline.isAfter(updatedProjectDeadline)) {
             model.addAttribute("updateSubProject", updateSubProject);
             model.addAttribute("updatedProjectDeadline", updatedProjectDeadline);
             model.addAttribute("updatedDeadLineError", true);
@@ -91,17 +94,19 @@ public class SubProjectController {
         projectRepository.updateProject(project);
         return "redirect:/projectCalculator/mainPage/" + projectId;
     }
+
     @PostMapping("/assignusertosub/{subId}")
     public String assignUserToSubProject(@PathVariable int subId, @RequestParam("email") String userEmail) {
         List<Integer> listOfUserIds = new ArrayList<>();
         int userId = projectUserRepository.getUserIdByEmail(userEmail);
-        if(userId != -1) {
+        if (userId != -1) {
             listOfUserIds.add(userId);
             subProjectUserRepository.assignUsersToSubProject(subId, listOfUserIds);
         }
 
         return "redirect:/projectCalculator/mainPage/" + subId;
     }
+
     @PostMapping("/deletesubproject/{pid}")
     public String deleteProject(@PathVariable int pid) {
         SubProject subProjectDelete = subProjectRepository.getSpecificSubProject(pid);

@@ -1,4 +1,5 @@
 package com.example.eksamensprojekt.repository;
+
 import com.example.eksamensprojekt.models.SubProject;
 import com.example.eksamensprojekt.models.Tasks;
 import org.springframework.beans.factory.annotation.Value;
@@ -151,7 +152,7 @@ public class SubProjectRepository {
         List<Tasks> tasks = tasksRepository.getTaskList(subProjectId);
         SubProject subProject = getSpecificSubProject(subProjectId);
 
-        if(tasks.isEmpty()) {
+        if (tasks.isEmpty()) {
             return 0;
         }
 

@@ -95,32 +95,6 @@ public class ProjectController {
         }
     }
 
-
-    @GetMapping("/viewassignedproject/{pid}")
-    public String assignedprojectView(@PathVariable int pid, Model model){
-        Project assignedProject = projectRepository.getSpecificAssignedProject(pid);
-
-        String projectTitle = assignedProject.getTitle();
-        model.addAttribute("projectTitle", projectTitle);
-
-        String projectDescription = assignedProject.getDescription();
-        model.addAttribute("projectDescription", projectDescription);
-
-        model.addAttribute("projectID", pid);
-        model.addAttribute("userId", assignedProject.getUserId());
-
-        List<SubProject> subProjects = subProjectRepository.getSubProjects(pid);
-        model.addAttribute("subProjects", subProjects);
-
-        for (SubProject s : subProjects){
-            List<Tasks> tasks = tasksRepository.getTaskList(s.getId());
-            s.setTasks(tasks);
-        }
-
-
-        return "viewAssignedProject";
-    }
-
     @PostMapping("/assignuser/{projectId}")
     public String assignUserToProject(@PathVariable int projectId, @RequestParam("email") String userEmail, Model model) {
         List<Integer> listOfUserIds = new ArrayList<>();

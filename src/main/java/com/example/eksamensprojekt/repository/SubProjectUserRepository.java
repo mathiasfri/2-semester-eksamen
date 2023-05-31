@@ -1,4 +1,5 @@
 package com.example.eksamensprojekt.repository;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -28,6 +29,7 @@ public class SubProjectUserRepository {
             throw new RuntimeException(e);
         }
     }
+
     public void assignUsersToaSubProject(int subProjectId, List<Integer> userIds) {
         try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)) {
             String selectQuery = "SELECT COUNT(*) FROM subproject_user WHERE sub_id = ? AND user_id = ?";
@@ -56,8 +58,8 @@ public class SubProjectUserRepository {
         }
     }
 
-    public boolean isAssignedToSubproject(int userID, int subID){
-        try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)){
+    public boolean isAssignedToSubproject(int userID, int subID) {
+        try (Connection con = DriverManager.getConnection(url, user_id, user_pwd)) {
             String SQL = "SELECT * FROM subproject_user WHERE user_id = ? AND sub_id = ?";
             PreparedStatement pstm = con.prepareStatement(SQL);
             pstm.setInt(1, userID);
@@ -66,8 +68,7 @@ public class SubProjectUserRepository {
 
             return rs.next();
 
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
