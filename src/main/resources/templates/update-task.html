@@ -8,7 +8,7 @@
 </head>
 <body>
 <div th:insert="~{fragments/header-footer.html :: header}"></div>
-<h1>Update Project</h1>
+<h1 class="centered">Update Task</h1>
 <div>
   <form th:action="@{/projectCalculator/updatetask}" th:object="${updateTask}"
         method="post" style="margin-top: 60px">
